@@ -17,8 +17,14 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
   camera_parameters = general_utils.create_pinhole(foc,foc,cx,cy)
 
   n_points = 500000 // 30
-  #n_points = 1
   camera_radius = 5
+
+
+  # bundle adjustment noise parameters
+  pix_noise = 0.0
+  pos_noise = 0.5
+  rot_noise = 0.5
+
 
   # to find the center of the pcd, use CloudCompare or something
   center = np.array([-9.62, -0.608, -1.345])
@@ -46,7 +52,7 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
   output_dir = "problem_encodings"
   output_file = os.path.join(output_dir,output_name)
   geometry_utils.create_bal_problem_file(correspondences, n_cameras, np.array(pcd.points), cameras, output_file,
-                                         pixel_noise_scale=0.0, translation_noise_scale=0.5, rotation_noise_scale=0.5)
+                                         pixel_noise_scale=pix_noise, translation_noise_scale=pos_noise, rotation_noise_scale=rot_noise)
 
 
 def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=None):
