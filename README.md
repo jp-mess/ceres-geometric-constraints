@@ -9,7 +9,7 @@ This repository provides a simulation environment for 3D computer vision alignme
 - **Camera View Sampling**: Tools for sampling camera views around a point cloud (`.ply` format).
 - **Image Rendering**: Functionality to render point cloud views into images.
 - **Point Cloud Retriangulation**: Capability for both pairwise and multiview DLT triangulation schemes.
-- **Correct Bundle Adjustment Implementation**: Simple Levenberg-Marquardt bundle adjustment is implemented and tested (with an easy encoding scheme for going back and forth between the python scripts, without using pybind11).
+- **Bundle Adjustment**: Simple Levenberg-Marquardt bundle adjustment is implemented and tested (with an easy encoding scheme for going back and forth between the python scripts, without using pybind11).
 
 ## Getting Started
 
