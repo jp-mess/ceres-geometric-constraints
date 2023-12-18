@@ -1,7 +1,7 @@
 # 3D Computer Vision Simulation Environment
 
 <p align="center">
-  <img src="diagrams/car.png" alt="Car Image" style="width: 50%; height: 50%;"/>
+  <img src="diagrams/cars.png" alt="Car Image" style="width: 50%; height: 50%;"/>
 </p>
 
 
@@ -35,7 +35,7 @@ pip install -r requirements.txt
 ## Using the Python Simulation Environment
 
 <p align="center">
-  <img src="diagrams/pictures of cars.png" alt="Pictures of Cars" style="width: 50%; height: 50%;"/>
+  <img src="diagrams/images_of_cars.png" alt="Pictures of Cars" style="width: 50%; height: 50%;"/>
 </p>
 
 ### Overview
