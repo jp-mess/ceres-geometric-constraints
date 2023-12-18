@@ -1,0 +1,15 @@
+# Ignore .ply and .las files
+*.ply
+*.las
+
+# Ignore Python cache directories
+__pycache__/
+
+# Ignore the build directory specifically in the bundle_adjustment/ directory
+bundle_adjustment/build/
+
+# Ignore input data
+source_clouds/*
+
+# As well as problem encodings
+problem_encodings/*
