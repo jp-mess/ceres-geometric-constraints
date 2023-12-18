@@ -16,14 +16,6 @@ This repository provides a simulation environment for 3D computer vision alignme
 - **Point Cloud Retriangulation**: Capability for both pairwise and multiview DLT triangulation schemes.
 - **Bundle Adjustment**: Simple Levenberg-Marquardt bundle adjustment is implemented and tested (with an easy encoding scheme for going back and forth between the python scripts, without using pybind11).
 
-## Getting Started
-
-Clone the repository to begin:
-
-```bash
-git clone https://github.com/your-username/your-repo-name.git
-```
-
 ## Python Requirements
 
 The Python dependencies for this project are listed in `requirements.txt`. To install these dependencies, run the following command in your Python environment:
