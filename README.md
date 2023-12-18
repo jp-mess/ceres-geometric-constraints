@@ -17,8 +17,7 @@ Clone the repository to begin:
 
 ```bash
 git clone https://github.com/your-username/your-repo-name.git
-```bash
-
+```
 
 ## Python Requirements
 
@@ -26,5 +25,4 @@ The Python dependencies for this project are listed in `requirements.txt`. To in
 
 ```bash
 pip install -r requirements.txt
-```bash
-
+```
