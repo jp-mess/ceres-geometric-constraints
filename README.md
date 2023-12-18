@@ -1,5 +1,10 @@
 # 3D Computer Vision Simulation Environment
 
+<p align="center">
+  <img src="diagrams/car.png" alt="Car Image" style="width: 50%; height: 50%;"/>
+</p>
+
+
 ## Introduction
 
 This repository provides a simulation environment for 3D computer vision alignment problems, specifically focusing on bundle adjustment. It serves as a straightforward setup for those interested in delving into computer vision algorithms without the complexity of building an experimental setup from the ground up. The environment includes functionality for noise modeling in camera views and an implementation of bundle adjustment using Ceres in C++, along with an encoding scheme to facilitate data exchange between Python scripts and the C++ optimization framework.
@@ -28,6 +33,10 @@ pip install -r requirements.txt
 ```
 
 ## Using the Python Simulation Environment
+
+<p align="center">
+  <img src="diagrams/pictures of cars.png" alt="Pictures of Cars" style="width: 50%; height: 50%;"/>
+</p>
 
 ### Overview
 
