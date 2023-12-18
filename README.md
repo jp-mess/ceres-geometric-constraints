@@ -26,3 +26,21 @@ The Python dependencies for this project are listed in `requirements.txt`. To in
 ```bash
 pip install -r requirements.txt
 ```
+
+## Using the Python Simulation Environment
+
+### Overview
+
+The Python component of the simulator, primarily encapsulated within `experiments.py`, comprises various functions for setting up and conducting 3D computer vision experiments. These functions facilitate the creation of tailored camera models with specific extrinsic and intrinsic parameters, designed to work with individual point clouds.
+
+### Key Requirements
+
+- **Y-Axis Up-Direction**: It's essential for all point clouds used in experiments to have a 'y-axis' up-direction. This orientation is crucial for ensuring the accuracy of camera models and subsequent processes.
+- **Experiment Functions**: The functions in `experiments.py` each represent a unique experimental setup, specifically crafted for different point clouds. Designed to be intuitive, these functions guide users through the setup process.
+
+### Running Experiments
+
+To run an experiment, you will need to choose an appropriate function from `experiments.py`. The main function in the simulator will execute your selected experiment. For experiments involving bundle adjustment, the problem's encoding will be directed to the `problem_encodings` directory. A compressed point cloud of a BMW is provided in the `source-point-clouds` directory for convenience. You can also explore a variety of free point clouds available on [Sketchfab](https://sketchfab.com) for some larger and more interesting 3D models.
+
+Please note that to run the simulator, you need to update the point cloud file path in `main.py`, as it is not set in `experiments.py`. Currently, everything inside `main.py` is hard-coded, and you run the main program with `python main.py`. Apologies for any inconvenience—this project was developed for personal use and convenience, and is not meant to be a rigorous, feature-complete framework.
+
