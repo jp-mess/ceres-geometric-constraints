@@ -3,7 +3,7 @@
 import numpy as np
 from scipy.spatial.transform import Rotation as R
 
-def project_point():
+def project_point_debug():
     
     camera_vector = np.array([-0.02313, -0.0078111, 3.0754, -10.3086, 1.55502, 3.11002, 525, 300, 300])
     world_point = np.array([-9.34843, -0.245021, -3.3983]) 
@@ -22,13 +22,6 @@ def project_point():
 
     # Convert rotation vector (angle-axis) to rotation matrix
     rot_mat = R.from_rotvec(rotation_vector).as_matrix()
-
-#    rot_mat = np.array([[-0.98826459, -0.0660811, 0.13771855],
-# [ 0., -0.90158384, -0.43260442],
-# [-0.15275179, 0.42752763, -0.89100338]])
-
-    print('INTERCEPTED')
-    print('rotation_matrix',rot_mat)
 
     # Apply extrinsic parameters (rotation and translation)
     #transformed_point = rot_mat @ world_point + translation
@@ -140,24 +133,31 @@ def render_coordinates(coordinates, image_size, colors):
 
   image = np.zeros((image_size[0], image_size[1], 3))
   collisions = dict()
-  for i,coord in enumerate(coordinates):
-    x,y = coord[0]
+  for i, coord in enumerate(coordinates):
+    x, y = coord[0]
     x = int(round(x))
     y = int(round(y))
 
+    # Flip the x-coordinate
+    x = image_size[1] - 1 - x
+
+    # Flip the y-coordinate
+    y = image_size[0] - 1 - y
+
     # color in if not viewed
-    if (x,y) not in collisions:
-      collisions[(x,y)] = coord[1]
+    if (x, y) not in collisions:
+      collisions[(x, y)] = coord[1]
       if 0 <= x < image_size[1] and 0 <= y < image_size[0]:
-        image[y,x] = colors[i]
+        image[y, x] = colors[i]
     else:
-      if collisions[(x,y)] > coord[1]:
-        collisions[(x,y)] = coord[1]
+      if collisions[(x, y)] > coord[1]:
+        collisions[(x, y)] = coord[1]
         if 0 <= x < image_size[1] and 0 <= y < image_size[0]:
-          image[y,x] = colors[i]
+          image[y, x] = colors[i]
+
   return image
 
 
 if __name__ == "__main__":
-  project_point()
+  project_point_debug()
 

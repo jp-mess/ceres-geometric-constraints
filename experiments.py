@@ -59,7 +59,7 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
                                          pixel_noise_scale=pix_noise, translation_noise_scale=pos_noise, rotation_noise_scale=rot_noise)
 
 
-def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=None,plot=True):
+def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=None,plot_rendered_images=True, visualize_frustrums=True):
   import geometry_utils
   import image_utils
   import general_utils
@@ -67,7 +67,7 @@ def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=No
   import open3d as o3d
   import matplotlib.pyplot as plt
 
-  n_cameras = 10
+  n_cameras = 3
   
   img_dim = 600
   cx = img_dim // 2
@@ -103,14 +103,15 @@ def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=No
 
   geometry_utils.retriangulate(cameras, correspondences, np.array(pcd.points), noise_scale=0.0, pairwise=False, save_dir=output_cloud_dir)
 
-  import frustum_visualizer
-  visualizer = frustum_visualizer.PointCloudCameraVisualizer(pcd, cameras, center)
-  visualizer.visualize()
+  if visualize_frustrums:
+    import frustum_visualizer
+    visualizer = frustum_visualizer.PointCloudCameraVisualizer(pcd, cameras, center)
+    visualizer.visualize()
 
-  #if plot: 
-  #  for image in images:
-  #    plt.imshow(image)
-  #    plt.show()
+  if plot_rendered_images: 
+    for image in images:
+      plt.imshow(image)
+      plt.show()
 
   return camera_parameters, images
 

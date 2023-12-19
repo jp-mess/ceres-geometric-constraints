@@ -95,49 +95,12 @@ def make_cameras(point_cloud_center, radius, up_direction, num_cameras, close=Fa
 
     if close:
         # Implement logic to adjust camera positions so they are closer together
+        raise NotImplementedError("Cannot simulate small angles yet.")
         pass
 
     return cameras
 
 
-def make_cameras_arch(point_cloud_center, radius, up_direction, num_cameras, close=False):
-    import general_utils
-
-    if up_direction != "y":
-        raise NotImplementedError("Currently only 'y' up-direction is implemented.")
-
-    def random_camera_position():
-        theta = np.random.uniform(0, np.pi * 2)
-        phi = np.random.uniform(0, np.pi / 2)
-        x = radius * np.sin(phi) * np.cos(theta)
-        z = radius * np.sin(phi) * np.sin(theta)
-        y = radius * np.cos(phi)
-        return np.array([x, y, z]) + point_cloud_center
-
-    def camera_direction(camera_loc):
-        center_proj_ray = point_cloud_center - camera_loc
-        return center_proj_ray / np.linalg.norm(center_proj_ray)
-
-    def make_pose_matrix(camera_loc):
-        z_dir = camera_direction(camera_loc)  # Forward direction (Z-axis)
-        x_dir = np.cross(np.array([0, 1, 0]), z_dir)  # Right direction (X-axis)
-        x_dir /= np.linalg.norm(x_dir)
-        y_dir = np.cross(z_dir, x_dir)  # Up direction (Y-axis)
-        y_dir /= np.linalg.norm(y_dir)
-        R_wc = np.stack((x_dir, y_dir, z_dir), axis=1)
-        return general_utils.create_pose_matrix(R_wc, camera_loc)
-
-    cameras = []
-    for _ in range(num_cameras):
-        camera_loc = random_camera_position()
-        pose_matrix = make_pose_matrix(camera_loc)
-        cameras.append(pose_matrix)
-
-    if close:
-        # Implement logic to adjust camera positions so they are closer together
-        pass
-
-    return cameras
 
 
 """
@@ -254,6 +217,10 @@ def retriangulate(cameras, correspondences, points, noise_scale=0.0, pairwise=Tr
   import numpy as np
   import open3d as o3d
   import os
+
+  if len(cameras) < 2:
+    print("not enough cameras to perform triangulation")
+    return None
 
   triangulated = list()
   errors = list()
