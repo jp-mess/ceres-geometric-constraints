@@ -20,7 +20,7 @@ This repository provides a simulation environment for 3D computer vision alignme
 - **Camera View Sampling**: Tools for sampling camera views around a point cloud (`.ply` format).
 - **Image Rendering**: Functionality to render point cloud views into images.
 - **Point Cloud Retriangulation**: Capability for both pairwise and multiview DLT triangulation schemes.
-- **Bundle Adjustment**: Simple Levenberg-Marquardt bundle adjustment is implemented and tested (with an easy encoding scheme for going back and forth between the python scripts, without using pybind11).
+- **Bundle Adjustment**: The implementation utilizes a Levenberg-Marquardt algorithm, mirroring the encoding style found in the [Ceres Solver examples](https://github.com/ceres-solver/ceres-solver). This code includes support functions for experimental exploration with manifolds through local parameterization.
 
 ## Python Requirements
 
