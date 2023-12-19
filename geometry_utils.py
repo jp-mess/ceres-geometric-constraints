@@ -58,9 +58,10 @@ def create_bal_problem_file(correspondences, n_cameras, point_container, true_ca
                 file.write(f"{point[i]}\n")
 
 
-def make_cameras_on_ring(point_cloud_center, radius, up_direction, num_cameras):
+def make_cameras_on_ring(point_cloud_center, radius, up_direction, num_cameras, output_dir="manifold_encodings"):
     import numpy as np
     import general_utils
+    import os
 
     if up_direction != "y":
         raise NotImplementedError("Currently only 'y' up-direction is implemented.")
@@ -96,6 +97,22 @@ def make_cameras_on_ring(point_cloud_center, radius, up_direction, num_cameras):
         camera_loc = camera_position_on_ring(angle)
         pose_matrix = make_pose_matrix(camera_loc)
         cameras.append(pose_matrix)
+   
+    # Save ring parameters to a file
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    ring_params = {
+        "type": "ring",
+        "center": ",".join(map(str, point_cloud_center)),
+        "normal": "0,1,0",  # Assuming 'y' up-direction
+        "radius": radius,
+        "elevation_degree": elevation_degree
+    }
+ 
+    with open(os.path.join(output_dir, "ring_params.txt"), "w") as file:
+        for key, value in ring_params.items():
+            file.write(f"{key}: {value}\n")
+ 
 
     return cameras
 

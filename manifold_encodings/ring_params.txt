@@ -1,0 +1,5 @@
+type: ring
+center: -9.62,-0.608,-1.345
+normal: 0,1,0
+radius: 5
+elevation_degree: 63.53734438911807
