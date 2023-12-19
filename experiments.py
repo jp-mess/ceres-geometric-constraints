@@ -59,7 +59,7 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
                                          pixel_noise_scale=pix_noise, translation_noise_scale=pos_noise, rotation_noise_scale=rot_noise)
 
 
-def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=None,plot_rendered_images=True, visualize_frustrums=True):
+def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=None,plot_rendered_images=False, visualize_frustrums=True):
   import geometry_utils
   import image_utils
   import general_utils
@@ -67,7 +67,7 @@ def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=No
   import open3d as o3d
   import matplotlib.pyplot as plt
 
-  n_cameras = 3
+  n_cameras = 6
   
   img_dim = 600
   cx = img_dim // 2
@@ -86,7 +86,8 @@ def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=No
   # with slight variation)  
   up_direction = "y"
   cameras = list()
-  cameras = geometry_utils.make_cameras(center, camera_radius, up_direction, n_cameras, close=False)
+  #cameras = geometry_utils.make_cameras(center, camera_radius, up_direction, n_cameras)
+  cameras = geometry_utils.make_cameras_on_ring(center, camera_radius, up_direction, n_cameras)
   cameras = [general_utils.package_camera(camera, camera_parameters, 'camera_' + str(i)) for i, camera in enumerate(cameras)]
 
   # subsample point cloud indices

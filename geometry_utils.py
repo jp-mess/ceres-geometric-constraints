@@ -58,6 +58,47 @@ def create_bal_problem_file(correspondences, n_cameras, point_container, true_ca
                 file.write(f"{point[i]}\n")
 
 
+def make_cameras_on_ring(point_cloud_center, radius, up_direction, num_cameras):
+    import numpy as np
+    import general_utils
+
+    if up_direction != "y":
+        raise NotImplementedError("Currently only 'y' up-direction is implemented.")
+
+    # Randomly choose an elevation degree between 0 and 30 (which corresponds to 60 to 90 degrees from horizontal)
+    elevation_degree = np.random.uniform(60, 90)
+    elevation_radian = np.radians(elevation_degree)
+    phi = elevation_radian  # phi is now directly the elevation angle from the vertical axis
+
+    def camera_position_on_ring(angle):
+        # Calculate x, y, z based on spherical coordinates
+        x = radius * np.sin(phi) * np.cos(angle)
+        z = radius * np.sin(phi) * np.sin(angle)
+        y = radius * np.cos(phi)
+        return np.array([x, y, z]) + point_cloud_center
+
+    def camera_direction(camera_loc):
+        center_proj_ray = point_cloud_center - camera_loc
+        return center_proj_ray / np.linalg.norm(center_proj_ray)
+
+    def make_pose_matrix(camera_loc):
+        z_dir = camera_direction(camera_loc)  # Forward direction (Z-axis)
+        x_dir = np.cross(np.array([0, 1, 0]), z_dir)  # Right direction (X-axis)
+        x_dir /= np.linalg.norm(x_dir)
+        y_dir = np.cross(z_dir, x_dir)  # Up direction (Y-axis)
+        y_dir /= np.linalg.norm(y_dir)
+        R_wc = np.stack((x_dir, y_dir, z_dir), axis=1)
+        return general_utils.create_pose_matrix(R_wc, camera_loc)
+
+    cameras = []
+    for i in range(num_cameras):
+        angle = 2 * np.pi * i / num_cameras  # Uniformly space cameras around the ring
+        camera_loc = camera_position_on_ring(angle)
+        pose_matrix = make_pose_matrix(camera_loc)
+        cameras.append(pose_matrix)
+
+    return cameras
+
 
 def make_cameras(point_cloud_center, radius, up_direction, num_cameras, close=False):
     import numpy as np
