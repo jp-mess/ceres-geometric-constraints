@@ -66,6 +66,15 @@ The Python component of the simulator, primarily encapsulated within `experiment
   - **Output**: A list of pose matrices, where each matrix represents the extrinsic parameters of a camera.
   - **Description**: This function generates a specified number of cameras distributed uniformly along a ring at a fixed elevation angle around the point cloud. The elevation angle is randomly chosen between 60 and 90 degrees from the horizontal plane. Each camera is oriented towards the center of the point cloud.
 
+- **rasterize**
+  - **Inputs**:
+    - `cameras`: A list of camera objects, where each camera object contains 'extrinsic' and 'intrinsic' parameters.
+    - `indices_to_project`: A list of indices specifying which points in the point cloud to project.
+    - `points`: A numpy array of 3D points in the point cloud.
+    - `colors`: A list of colors associated with each point in the point cloud.
+  - **Output**: A dictionary named `correspondences`, where each key is a point index, and the value is a list of tuples. Each tuple contains the pixel coordinates and the depth of the point as seen from each camera.
+  - **Description**: This function rasterizes a 3D point cloud onto the image planes of multiple cameras. For each camera, it projects the specified points onto the camera's image plane using the camera's extrinsic and intrinsic parameters. The function calculates the pixel coordinates and depth of each point from the camera's perspective. The result is a dictionary of correspondences that maps each point index to its pixel locations and depths in all the cameras.
+
 - **render_coordinates**
   - **Inputs**:
     - `coordinates`: A dictionary where each key is a point index, and the value is a tuple containing a pixel coordinate `(x, y)` and a depth value `z`.
