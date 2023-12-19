@@ -27,7 +27,7 @@ pip install -r requirements.txt
 ## Using the Python Simulation Environment
 
 <p align="center">
-  <img src="diagrams/images_of_cars.png" alt="Pictures of Cars" style="width: 50%; height: 50%;"/>
+  <img src="diagrams/images_of_cars.png" alt="Pictures of Cars" style="width: 75%; height: 75%;"/>
 </p>
 
 ### Overview
