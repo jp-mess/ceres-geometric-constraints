@@ -5,7 +5,13 @@
 </p>
 
 
-## Introduction
+## Author's Introduction
+
+I made this repo to contain simulation and visualization scripts I use when messing around with point clouds, bundle adjustment, and camera models. It's really useful and I don't need (or want) to be cited for it. I wrote up the documentation using ChatGPT, and the paragraphs below have ChatGPT's distinctive tone. 
+
+
+
+## ChatGPT's Introduction
 
 This repository provides a simulation environment for 3D computer vision alignment problems, specifically focusing on bundle adjustment. It serves as a straightforward setup for those interested in delving into computer vision algorithms without the complexity of building an experimental setup from the ground up. The environment includes functionality for noise modeling in camera views and an implementation of bundle adjustment using Ceres in C++, along with an encoding scheme to facilitate data exchange between Python scripts and the C++ optimization framework.
 
