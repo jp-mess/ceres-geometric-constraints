@@ -66,6 +66,14 @@ The Python component of the simulator, primarily encapsulated within `experiment
   - **Output**: A list of pose matrices, where each matrix represents the extrinsic parameters of a camera.
   - **Description**: This function generates a specified number of cameras distributed uniformly along a ring at a fixed elevation angle around the point cloud. The elevation angle is randomly chosen between 60 and 90 degrees from the horizontal plane. Each camera is oriented towards the center of the point cloud.
 
+- **render_coordinates**
+  - **Inputs**:
+    - `coordinates`: A dictionary where each key is a point index, and the value is a tuple containing a pixel coordinate `(x, y)` and a depth value `z`.
+    - `image_size`: A tuple `(height, width)` specifying the size of the output image.
+    - `colors`: A list where each element corresponds to a color (as `[r, g, b]`) for each point index.
+  - **Output**: A numpy array representing the rendered image, where each pixel's color is determined by the closest point projecting onto it.
+  - **Description**: This function renders a 2D image from 3D point coordinates projected onto a 2D plane. It iterates over each 3D point, projects it onto the 2D plane using the provided pixel coordinates, and colors the corresponding pixel in the output image. If multiple points project onto the same pixel, the point with the smallest depth value (closest to the camera) determines the pixel's color. The function handles both horizontal and vertical flipping of the image to align with standard image coordinate systems.
+
 
 
 ### Running Experiments
