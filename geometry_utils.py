@@ -9,18 +9,6 @@ def create_bal_problem_file(correspondences, n_cameras, point_container, true_ca
     n_points = len(correspondences)
     point_idx_mapping = {original_idx: new_idx for new_idx, original_idx in enumerate(correspondences.keys())}
 
-    """
-    print('rot matrix',true_cameras[0]['extrinsic'][:3,:3])
-    rotation_matrix = true_cameras[0]["extrinsic"][:3, :3]
-    print(np.linalg.norm(rotation_matrix))
-    rotation = R.from_matrix(rotation_matrix)
-    angle_axis = rotation.as_rotvec()  # Convert to angle-axis
-    print('angle_axis', angle_axis)
-    rot_mat = R.from_rotvec(angle_axis).as_matrix()
-    print('decoded', rot_mat) 
-    print(np.linalg.norm(rot_mat))
-    """
-
     with open(output_file, 'w') as file:
         # Write the header
         num_observations = n_cameras * n_points
@@ -69,71 +57,88 @@ def create_bal_problem_file(correspondences, n_cameras, point_container, true_ca
             for i in range(3):
                 file.write(f"{point[i]}\n")
 
-"""
-given the center of the 3D model, sample a camera
-around the upper hemisphere of it (so orbiting around it, 
-but never under it)
 
-if you specify an initial camera, a "nearby" camera (on the same 
-sphere) will be sampled
-"""
-def make_camera(point_cloud_center,
-                radius,
-                up_direction,
-                initial_camera=None):
-  import general_utils
-  import numpy as np
 
-  if initial_camera is None:
-    if up_direction == "y":
-      theta = np.random.uniform(0, 2*np.pi/2)
-      phi = np.random.uniform(0,np.pi/2)
-      x = radius * np.sin(phi) * np.cos(theta)
-      z = radius * np.sin(phi) * np.sin(theta)
-      y = radius * np.cos(phi)
-    else:
-      raise NotImplementedError()
+def make_cameras(point_cloud_center, radius, up_direction, num_cameras, close=False):
+    import numpy as np
+    import general_utils
 
-    camera_loc = np.array([x,y,z])
-    camera_loc += point_cloud_center
-  else:
-    initial_loc = initial_camera[:3,3].flatten()
-    initial_loc -= point_cloud_center
-    camera_loc = nearby_coord(initial_loc)
-    camera_loc += point_cloud_center
+    if up_direction != "y":
+        raise NotImplementedError("Currently only 'y' up-direction is implemented.")
 
-  center_proj_ray = point_cloud_center - camera_loc
-  camera_direction = center_proj_ray / np.linalg.norm(center_proj_ray)
- 
-  if up_direction == "y":
+    def random_camera_position():
+        theta = np.random.uniform(0, np.pi * 2)
+        phi = np.random.uniform(np.pi / 6, np.pi / 2)  # Sampling from 30 to 90 degrees
+        x = radius * np.sin(phi) * np.cos(theta)
+        z = radius * np.sin(phi) * np.sin(theta)
+        y = radius * np.cos(phi)
+        return np.array([x, y, z]) + point_cloud_center
 
-    up_dir = np.array([0, 1, 0])
-    z_dir = camera_direction  # Assuming this is the forward direction (Z axis)
-    x_dir = np.cross(up_dir, z_dir)
-    x_dir /= np.linalg.norm(x_dir)
+    def camera_direction(camera_loc):
+        center_proj_ray = point_cloud_center - camera_loc
+        return center_proj_ray / np.linalg.norm(center_proj_ray)
 
-    y_dir = np.cross(z_dir, x_dir)  # This ensures a right-handed coordinate system
-    y_dir /= np.linalg.norm(y_dir)
+    def make_pose_matrix(camera_loc):
+        z_dir = camera_direction(camera_loc)  # Forward direction (Z-axis)
+        x_dir = np.cross(np.array([0, 1, 0]), z_dir)  # Right direction (X-axis)
+        x_dir /= np.linalg.norm(x_dir)
+        y_dir = np.cross(z_dir, x_dir)  # Up direction (Y-axis)
+        y_dir /= np.linalg.norm(y_dir)
+        R_wc = np.stack((x_dir, y_dir, z_dir), axis=1)
+        return general_utils.create_pose_matrix(R_wc, camera_loc)
 
-    R_wc = np.stack((x_dir, y_dir, z_dir), axis=1)
+    cameras = []
+    for _ in range(num_cameras):
+        camera_loc = random_camera_position()
+        pose_matrix = make_pose_matrix(camera_loc)
+        cameras.append(pose_matrix)
 
-    #up_dir = np.array(np.array([0,1,0]))
-    #x_dir = np.cross(up_dir,camera_direction)
-    #x_dir = x_dir / np.linalg.norm(x_dir)
-  
-    #y_dir = np.cross(x_dir, camera_direction)
-    #y_dir = y_dir / np.linalg.norm(y_dir)
+    if close:
+        # Implement logic to adjust camera positions so they are closer together
+        pass
 
-    #R_wc = np.stack((x_dir, y_dir, camera_direction), axis=1)
+    return cameras
 
-    rotation_matrix = R_wc
 
-    pose_matrix = general_utils.create_pose_matrix(rotation_matrix, camera_loc)
+def make_cameras_arch(point_cloud_center, radius, up_direction, num_cameras, close=False):
+    import general_utils
 
-  else:
-    raise NotImplementedError()
+    if up_direction != "y":
+        raise NotImplementedError("Currently only 'y' up-direction is implemented.")
 
-  return pose_matrix
+    def random_camera_position():
+        theta = np.random.uniform(0, np.pi * 2)
+        phi = np.random.uniform(0, np.pi / 2)
+        x = radius * np.sin(phi) * np.cos(theta)
+        z = radius * np.sin(phi) * np.sin(theta)
+        y = radius * np.cos(phi)
+        return np.array([x, y, z]) + point_cloud_center
+
+    def camera_direction(camera_loc):
+        center_proj_ray = point_cloud_center - camera_loc
+        return center_proj_ray / np.linalg.norm(center_proj_ray)
+
+    def make_pose_matrix(camera_loc):
+        z_dir = camera_direction(camera_loc)  # Forward direction (Z-axis)
+        x_dir = np.cross(np.array([0, 1, 0]), z_dir)  # Right direction (X-axis)
+        x_dir /= np.linalg.norm(x_dir)
+        y_dir = np.cross(z_dir, x_dir)  # Up direction (Y-axis)
+        y_dir /= np.linalg.norm(y_dir)
+        R_wc = np.stack((x_dir, y_dir, z_dir), axis=1)
+        return general_utils.create_pose_matrix(R_wc, camera_loc)
+
+    cameras = []
+    for _ in range(num_cameras):
+        camera_loc = random_camera_position()
+        pose_matrix = make_pose_matrix(camera_loc)
+        cameras.append(pose_matrix)
+
+    if close:
+        # Implement logic to adjust camera positions so they are closer together
+        pass
+
+    return cameras
+
 
 """
 assuming xyz is a vector centered at 0, sample a new coord

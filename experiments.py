@@ -34,11 +34,15 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
   # with slight variation)  
   up_direction = "y"
   cameras = list()
-  initial_camera = geometry_utils.make_camera(center,camera_radius,up_direction)
-  cameras.append(general_utils.package_camera(initial_camera, camera_parameters, 'camera_0'))
-  for i in range(1,n_cameras):
-    nearby_camera = geometry_utils.make_camera(center,camera_radius,up_direction,initial_camera)
-    cameras.append(general_utils.package_camera(nearby_camera, camera_parameters, 'camera_' + str(i)))
+
+  cameras = geometry_utils.make_cameras(center, camera_radius, up_direction)
+  cameras = [general_utils.package_camera(camera, camera_parameters, 'camera_' + str(i)) for i, camera in enumerate(cameras)]
+ 
+  #initial_camera = geometry_utils.make_camera(center,camera_radius,up_direction)
+  #cameras.append(general_utils.package_camera(initial_camera, camera_parameters, 'camera_0'))
+  #for i in range(1,n_cameras):
+  #  nearby_camera = geometry_utils.make_camera(center,camera_radius,up_direction,initial_camera)
+  #  cameras.append(general_utils.package_camera(nearby_camera, camera_parameters, 'camera_' + str(i)))
   
   # subsample point cloud indices
   indices = np.arange(len(pcd.points))
@@ -55,7 +59,7 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
                                          pixel_noise_scale=pix_noise, translation_noise_scale=pos_noise, rotation_noise_scale=rot_noise)
 
 
-def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=None):
+def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=None,plot=True):
   import geometry_utils
   import image_utils
   import general_utils
@@ -63,7 +67,7 @@ def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=No
   import open3d as o3d
   import matplotlib.pyplot as plt
 
-  n_cameras = 3
+  n_cameras = 10
   
   img_dim = 600
   cx = img_dim // 2
@@ -82,12 +86,9 @@ def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=No
   # with slight variation)  
   up_direction = "y"
   cameras = list()
-  initial_camera = geometry_utils.make_camera(center,camera_radius,up_direction)
-  cameras.append(general_utils.package_camera(initial_camera, camera_parameters, 'camera_0'))
-  for i in range(1,n_cameras):
-    nearby_camera = geometry_utils.make_camera(center,camera_radius,up_direction,initial_camera)
-    cameras.append(general_utils.package_camera(nearby_camera, camera_parameters, 'camera_' + str(i)))
-  
+  cameras = geometry_utils.make_cameras(center, camera_radius, up_direction, n_cameras, close=False)
+  cameras = [general_utils.package_camera(camera, camera_parameters, 'camera_' + str(i)) for i, camera in enumerate(cameras)]
+
   # subsample point cloud indices
   indices = np.arange(len(pcd.points))
   indices = np.random.permutation(indices)
@@ -101,11 +102,15 @@ def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=No
   images = image_utils.render_all_images(correspondences, np.array(pcd.points), pcd.colors, img_dim)
 
   geometry_utils.retriangulate(cameras, correspondences, np.array(pcd.points), noise_scale=0.0, pairwise=False, save_dir=output_cloud_dir)
- 
-  if plot: 
-    for image in images:
-      plt.imshow(image)
-      plt.show()
+
+  import frustum_visualizer
+  visualizer = frustum_visualizer.PointCloudCameraVisualizer(pcd, cameras, center)
+  visualizer.visualize()
+
+  #if plot: 
+  #  for image in images:
+  #    plt.imshow(image)
+  #    plt.show()
 
   return camera_parameters, images
 
