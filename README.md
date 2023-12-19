@@ -45,6 +45,29 @@ The Python component of the simulator, primarily encapsulated within `experiment
 - **Y-Axis Up-Direction**: It's essential for all point clouds used in experiments to have a 'y-axis' up-direction. This orientation is crucial for ensuring the accuracy of camera models and subsequent processes.
 - **Experiment Functions**: The functions in `experiments.py` each represent a unique experimental setup, specifically crafted for different point clouds. Designed to be intuitive, these functions guide users through the setup process.
 
+## Functions
+
+- **make_cameras**
+  - **Inputs**:
+    - `point_cloud_center`: A numpy array representing the 3D center of the point cloud.
+    - `radius`: A float specifying the radius of the hemisphere around the point cloud where cameras are placed.
+    - `up_direction`: A string indicating the up direction ('y' for upward).
+    - `num_cameras`: An integer specifying the number of cameras to generate.
+    - `close`: A boolean indicating whether cameras should be placed close to each other (optional).
+  - **Output**: A list of pose matrices, where each matrix represents the extrinsic parameters of a camera.
+  - **Description**: This function generates a specified number of cameras distributed uniformly over a hemisphere centered around the point cloud. Each camera is oriented towards the center of the point cloud.
+
+- **make_cameras_on_ring**
+  - **Inputs**:
+    - `point_cloud_center`: A numpy array representing the 3D center of the point cloud.
+    - `radius`: A float specifying the radius of the ring around the point cloud where cameras are placed.
+    - `up_direction`: A string indicating the up direction ('y' for upward).
+    - `num_cameras`: An integer specifying the number of cameras to generate.
+  - **Output**: A list of pose matrices, where each matrix represents the extrinsic parameters of a camera.
+  - **Description**: This function generates a specified number of cameras distributed uniformly along a ring at a fixed elevation angle around the point cloud. The elevation angle is randomly chosen between 60 and 90 degrees from the horizontal plane. Each camera is oriented towards the center of the point cloud.
+
+
+
 ### Running Experiments
 
 To run an experiment, you will need to choose an appropriate function from `experiments.py`. The main function in the simulator will execute your selected experiment. For experiments involving bundle adjustment, the problem's encoding will be directed to the `problem_encodings` directory. A compressed point cloud of a BMW is provided in the `source-point-clouds` directory for convenience. You can also explore a variety of free point clouds available on [Sketchfab](https://sketchfab.com) for some larger and more interesting 3D models.
