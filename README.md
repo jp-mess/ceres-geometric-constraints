@@ -7,7 +7,7 @@
 
 ## Author's Introduction
 
-I made this repo to contain simulation and visualization scripts I use when messing around with point clouds, bundle adjustment, and camera models. I keep coming back to these scripts in my own work because they did turn out to be very useful (setting up a simulation environment that has correct right-hand rules, open3d frustum visualization, ceres encoding etc. is a pain in the butt). I wrote up the documentation using ChatGPT, and the paragraphs below have ChatGPT's distinctive tone. I did write the code, and while it's easy to follow I know I'm not winning any awards for it.  
+I made this repo to contain simulation and visualization scripts I use when messing around with point clouds, bundle adjustment, and camera models. I keep coming back to these scripts in my own work because they did turn out to be very useful (setting up a simulation environment that has correct right-hand rules, open3d frustum visualization, ceres encoding, et cetera). I wrote up the documentation using ChatGPT, and the paragraphs below have ChatGPT's distinctive tone. Please steal, mutilate and share this code for your own purposes and advancement (I do not need to be cited). 
 
 
 
