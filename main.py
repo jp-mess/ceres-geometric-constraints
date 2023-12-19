@@ -16,8 +16,8 @@ if __name__ == "__main__":
   input_cloud = os.path.join(root_dir,'source_point_clouds','bmw.ply')
   output_cloud_dir = os.path.join(root_dir,'output_clouds')
 
-  experiments.bmw_retriangulation_experiment(root_dir, input_cloud=input_cloud, output_cloud_dir=output_cloud_dir)
-  #experiments.bmw_bundle_adjustment_experiment(root_dir, input_cloud=input_cloud, output_cloud_dir=output_cloud_dir)
+  #experiments.bmw_retriangulation_experiment(root_dir, input_cloud=input_cloud, output_cloud_dir=output_cloud_dir)
+  experiments.bmw_bundle_adjustment_experiment(root_dir, input_cloud=input_cloud, output_cloud_dir=output_cloud_dir)
 
   
 

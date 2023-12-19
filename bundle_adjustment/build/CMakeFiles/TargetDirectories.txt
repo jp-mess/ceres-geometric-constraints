@@ -1,4 +1,4 @@
-/home/jackbuntu/workspace/3D-Rig-Example/bundle_adjustment/build/CMakeFiles/bundle_adjust.dir
-/home/jackbuntu/workspace/3D-Rig-Example/bundle_adjustment/build/CMakeFiles/assess_reprojection.dir
-/home/jackbuntu/workspace/3D-Rig-Example/bundle_adjustment/build/CMakeFiles/edit_cache.dir
-/home/jackbuntu/workspace/3D-Rig-Example/bundle_adjustment/build/CMakeFiles/rebuild_cache.dir
+/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/bundle_adjust.dir
+/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/assess_reprojection.dir
+/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/edit_cache.dir
+/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/rebuild_cache.dir
