@@ -45,7 +45,7 @@ The Python component of the simulator, primarily encapsulated within `experiment
 - **Y-Axis Up-Direction**: It's essential for all point clouds used in experiments to have a 'y-axis' up-direction. This orientation is crucial for ensuring the accuracy of camera models and subsequent processes.
 - **Experiment Functions**: The functions in `experiments.py` each represent a unique experimental setup, specifically crafted for different point clouds. Designed to be intuitive, these functions guide users through the setup process.
 
-## Functions
+## Python Functions (everything but BA optimization)
 
 - **make_cameras**
   - **Inputs**:
@@ -83,6 +83,45 @@ The Python component of the simulator, primarily encapsulated within `experiment
   - **Output**: A numpy array representing the rendered image, where each pixel's color is determined by the closest point projecting onto it.
   - **Description**: This function renders a 2D image from 3D point coordinates projected onto a 2D plane. It iterates over each 3D point, projects it onto the 2D plane using the provided pixel coordinates, and colors the corresponding pixel in the output image. If multiple points project onto the same pixel, the point with the smallest depth value (closest to the camera) determines the pixel's color. The function handles both horizontal and vertical flipping of the image to align with standard image coordinate systems.
 
+- **retriangulate**
+  - **Inputs**:
+    - `cameras`: A list of camera dictionaries, where each dictionary contains a 'camera' key with a 4x4 pose matrix and a 'name' key with a string identifier.
+    - `correspondences`: A dictionary mapping point indices to a list of tuples. Each tuple contains pixel coordinates `(x, y)` and depth information.
+    - `points`: A numpy array of 3D points in the point cloud.
+    - `noise_scale`: A float specifying the amount of Gaussian noise to add to each pixel observation (default is 0.0).
+    - `pairwise`: A boolean indicating whether to perform pairwise triangulation (default is True). If False, performs multiview triangulation.
+    - `save_dir`: A string specifying the directory to save the retriangulated point cloud (optional).
+  - **Output**: A numpy array of retriangulated 3D points.
+  - **Description**: This function retriangulates a point cloud from given correspondences using the Direct Linear Transform (DLT) method. It supports both pairwise triangulation (creating a world point for each view edge) and multiview triangulation (creating a single world point for all cameras observing the same point). The function can add Gaussian noise to pixel observations, compute the average retriangulation error, and optionally save the retriangulated point cloud as a `.ply` file. The output is a numpy array of the retriangulated points.
+
+## PointCloudCameraVisualizer Class
+
+The `PointCloudCameraVisualizer` class is designed for visual debugging of 3D point clouds and camera positions. It allows the visualization of a point cloud along with camera frustums, camera markers, and lines indicating the camera's view direction. This class is particularly useful for verifying camera placements and orientations in 3D space.
+
+### Methods
+- **`__init__(self, pcd, cameras, center_point)`**
+  - Initializes the visualizer with a point cloud (`pcd`), a list of camera dictionaries (`cameras`), and a center point (`center_point`) around which the cameras are positioned.
+- **`create_camera_marker(self, location, size=0.05)`**
+  - Creates a spherical marker to represent the camera's position. `location` specifies the camera's 3D position, and `size` sets the sphere's radius.
+- **`create_line(self, camera_extrinsic)`**
+  - Generates a line between the camera position (extracted from `camera_extrinsic`) and the center point of the point cloud. This line helps visualize the camera's view direction.
+- **`create_wireframe_box(self, center, extents, rotation_matrix)`**
+  - Creates a wireframe box representing a camera's frustum. The box's center, size (extents), and orientation (rotation_matrix) are specified by the camera's position and view direction.
+- **`create_frustum(self, camera_extrinsic, dim=0.2)`**
+  - Constructs a frustum for a camera using its extrinsic parameters. The `dim` parameter controls the size of the frustum.
+- **`visualize(self)`**
+  - Renders the point cloud, camera markers, view lines, and frustums in a 3D visualization window. The background color of the window is set to charcoal grey.
+
+### Usage Example
+To use `PointCloudCameraVisualizer`, create an instance by passing a point cloud, a list of cameras, and a center point. Then, call the `visualize` method to open a 3D visualization window:
+
+```python
+pcd = o3d.geometry.PointCloud()  # Your point cloud
+cameras = [{'extrinsic': camera_extrinsic, 'intrinsic': camera_intrinsic}]  # List of cameras
+center_point = np.array([x, y, z])  # Center point around which cameras are positioned
+
+visualizer = PointCloudCameraVisualizer(pcd, cameras, center_point)
+visualizer.visualize()
 
 
 ### Running Experiments
