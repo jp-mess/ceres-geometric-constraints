@@ -93,12 +93,12 @@ def update_bal_problem_with_ring_cameras(ring_params_file, old_bal_file, new_bal
     with open(old_bal_file, 'r') as file:
         lines = file.readlines()
 
-    # Parse the header to get the number of cameras, points, and observations
+    # Parse the header
     header = lines[0]
     n_cameras, n_points, n_observations = map(int, header.split())
 
-    # Calculate the starting index for camera data (right after observations)
-    camera_data_start_index = 1 + n_observations  # Start of camera data
+    # Calculate the starting index for camera data
+    camera_data_start_index = 1 + n_observations
 
     with open(new_bal_file, 'w') as file:
         file.write(header)
@@ -114,25 +114,25 @@ def update_bal_problem_with_ring_cameras(ring_params_file, old_bal_file, new_bal
 
             camera_data = general_utils.convert_strings_to_float_array(camera_data)
 
-            # Split and convert rotation and translation lines
+            # Split rotation and translation
             rotation = camera_data[:3]
             translation = camera_data[3:6]
 
             # Project translation onto the ring
             projected_translation = project_point_onto_ring(translation, ring_params)
 
-            # Write updated camera parameters (rotation and projected translation)
+            # Write updated camera parameters
             for angle in rotation:
-              file.write(f"{angle}\n")
+                file.write(f"{angle}\n")
             for coord in projected_translation:
-              file.write(f"{coord}\n")
+                file.write(f"{coord}\n")
 
             # Write the intrinsics and any other camera data unchanged
             for intrinsic in camera_data[6:]:
-                file.write(str(intrinsic) + "\n")
+                file.write(f"{intrinsic}\n")
 
         # Write the rest of the file unchanged (world points)
-        for line in lines[camera_data_start_index + n_cameras * 10:]:
+        for line in lines[camera_data_start_index + n_cameras * 9:]:
             file.write(line)
 
 

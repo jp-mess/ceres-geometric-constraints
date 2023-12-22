@@ -59,8 +59,11 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
   ring_utils.update_bal_problem_with_ring_cameras(ring_params_file, ba_encoding_file, ring_encoding_file)
   print("residuals before ring projection")
   ring_utils.print_camera_residuals_from_file(ring_params_file, ba_encoding_file)
-  print("after")
+  print("and after")
   ring_utils.print_camera_residuals_from_file(ring_params_file, ring_encoding_file)
+  
+  geometry_utils.invert_camera_pose(ba_encoding_file, "problem_encodings/inverted_ba_problem.txt")
+  geometry_utils.invert_camera_pose(ring_encoding_file, "problem_encodings/inverted_ring_problem.txt")
 
   if visualize_frustums: 
     import frustum_visualizer
@@ -68,7 +71,7 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
     visualizer.visualize()
 
 
-def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=None,plot_rendered_images=False, visualize_frustrums=True):
+def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=None,plot_rendered_images=True, visualize_frustrums=True):
   import geometry_utils
   import image_utils
   import general_utils
@@ -76,7 +79,7 @@ def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=No
   import open3d as o3d
   import matplotlib.pyplot as plt
 
-  n_cameras = 6
+  n_cameras = 3
   
   img_dim = 600
   cx = img_dim // 2
@@ -95,8 +98,8 @@ def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=No
   # with slight variation)  
   up_direction = "y"
   cameras = list()
-  #cameras = geometry_utils.make_cameras(center, camera_radius, up_direction, n_cameras)
-  cameras, manifold_file = geometry_utils.make_cameras_on_ring(center, camera_radius, up_direction, n_cameras)
+  ring_params_file = "manifold_encodings/ring_params.txt"
+  cameras = geometry_utils.make_cameras_on_ring(center, camera_radius, up_direction, n_cameras, ring_params_file=ring_params_file)
   cameras = [general_utils.package_camera(camera, camera_parameters, 'camera_' + str(i)) for i, camera in enumerate(cameras)]
 
   # subsample point cloud indices

@@ -1,6 +1,63 @@
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from scipy.spatial.transform import Rotation as R
 import numpy as np
+
+
+def invert_camera_pose(bal_file, output_file):
+    with open(bal_file, 'r') as file:
+        lines = file.readlines()
+
+    header = lines[0]
+    n_cameras, n_points, n_observations = map(int, header.split())
+
+    camera_data_start_index = 1 + n_observations
+    camera_data_end_index = camera_data_start_index + n_cameras * 9
+
+    with open(output_file, 'w') as file:
+        file.write(header)
+
+        # Write the observations unchanged
+        for line in lines[1:camera_data_start_index]:
+            file.write(line)
+
+        # Process and write inverted camera parameters
+        for i in range(n_cameras):
+            camera_start = camera_data_start_index + i * 9
+            camera_end = camera_start + 9
+            camera_data = lines[camera_start:camera_end]
+
+            # Extract rotation and translation
+            rotation = np.array([float(camera_data[j]) for j in range(3)])
+            translation = np.array([float(camera_data[j+3]) for j in range(3)])
+
+            # Convert to pose matrix
+            rotation_matrix = R.from_rotvec(rotation).as_matrix()
+            pose_matrix = np.eye(4)
+            pose_matrix[:3, :3] = rotation_matrix
+            pose_matrix[:3, 3] = translation
+
+            # Invert the pose matrix
+            inverted_matrix = np.linalg.inv(pose_matrix)
+
+            # Extract the inverted rotation and translation
+            inverted_rotation = R.from_matrix(inverted_matrix[:3, :3]).as_rotvec()
+            inverted_translation = inverted_matrix[:3, 3]
+
+            # Write inverted camera parameters
+            for component in inverted_rotation:
+                file.write(f'{component}\n')
+            for component in inverted_translation:
+                file.write(f'{component}\n')
+
+            # Write intrinsics and any other camera data unchanged
+            for j in range(6, 9):
+                file.write(camera_data[j])
+
+        # Write the rest of the file unchanged (world points)
+        for line in lines[camera_data_end_index:]:
+            file.write(line)
+
 
 def plot_3d_points(points):
     """
