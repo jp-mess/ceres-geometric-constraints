@@ -8,7 +8,7 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
   import matplotlib.pyplot as plt
   import os
    
-  n_cameras = 3
+  n_cameras = 6
   
   img_dim = 600
   cx = img_dim // 2
@@ -35,9 +35,18 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
   up_direction = "y"
   cameras = list()
 
-  cameras = geometry_utils.make_cameras_on_ring(center, camera_radius, up_direction, n_cameras)
+  cameras, manifold_file = geometry_utils.make_cameras_on_ring(center, camera_radius, up_direction, n_cameras)
   cameras = [general_utils.package_camera(camera, camera_parameters, 'camera_' + str(i)) for i, camera in enumerate(cameras)]
  
+  import manifold_utils
+  manifold_utils.print_cameras_distance_to_ring(cameras, "manifold_encodings/ring_params.txt")
+  import sys
+  sys.exit(0)
+  
+  
+  #import manifold_utils 
+  #manifold_utils.adjust_camera_positions_to_ring(output_file, manifold_file, output_file_path=os.path.join(output_dir,"ring_encoding.txt"))
+
   # subsample point cloud indices
   indices = np.arange(len(pcd.points))
   indices = np.random.permutation(indices)
@@ -47,10 +56,18 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
   correspondences = image_utils.rasterize(cameras=cameras,indices_to_project=indices,
                                                           points=np.array(pcd.points),
                                                           colors=pcd.colors)
+  
   output_dir = "problem_encodings"
   output_file = os.path.join(output_dir,output_name)
   geometry_utils.create_bal_problem_file(correspondences, n_cameras, np.array(pcd.points), cameras, output_file,
                                          pixel_noise_scale=pix_noise, translation_noise_scale=pos_noise, rotation_noise_scale=rot_noise)
+  
+ 
+   
+  if False: 
+    import frustum_visualizer
+    visualizer = frustum_visualizer.PointCloudCameraVisualizer(pcd, cameras, center)
+    visualizer.visualize()
 
 
 def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=None,plot_rendered_images=False, visualize_frustrums=True):
@@ -81,7 +98,7 @@ def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=No
   up_direction = "y"
   cameras = list()
   #cameras = geometry_utils.make_cameras(center, camera_radius, up_direction, n_cameras)
-  cameras = geometry_utils.make_cameras_on_ring(center, camera_radius, up_direction, n_cameras)
+  cameras, manifold_file = geometry_utils.make_cameras_on_ring(center, camera_radius, up_direction, n_cameras)
   cameras = [general_utils.package_camera(camera, camera_parameters, 'camera_' + str(i)) for i, camera in enumerate(cameras)]
 
   # subsample point cloud indices

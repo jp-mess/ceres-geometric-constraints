@@ -1,3 +1,30 @@
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
+
+def plot_3d_points(points):
+    """
+    Plot a list of 3D points using matplotlib.
+
+    :param points: A list of numpy arrays, each of shape (3,), representing 3D points.
+    """
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Extracting x, y, and z coordinates from the points
+    x_coords = [point[0] for point in points]
+    y_coords = [point[1] for point in points]
+    z_coords = [point[2] for point in points]
+
+    ax.scatter(x_coords, y_coords, z_coords)
+
+    ax.set_xlabel('X Axis')
+    ax.set_ylabel('Y Axis')
+    ax.set_zlabel('Z Axis')
+
+    plt.show()
+
+
 
 def create_bal_problem_file(correspondences, n_cameras, point_container, true_cameras, output_file, translation_noise_scale = 0.0, rotation_noise_scale = 0.0, pixel_noise_scale = 0.0):
 
@@ -57,7 +84,6 @@ def create_bal_problem_file(correspondences, n_cameras, point_container, true_ca
             for i in range(3):
                 file.write(f"{point[i]}\n")
 
-
 def make_cameras_on_ring(point_cloud_center, radius, up_direction, num_cameras, output_dir="manifold_encodings"):
     import numpy as np
     import general_utils
@@ -66,10 +92,13 @@ def make_cameras_on_ring(point_cloud_center, radius, up_direction, num_cameras, 
     if up_direction != "y":
         raise NotImplementedError("Currently only 'y' up-direction is implemented.")
 
-    # Randomly choose an elevation degree between 0 and 30 (which corresponds to 60 to 90 degrees from horizontal)
+    # Randomly choose an elevation degree between 60 and 90
     elevation_degree = np.random.uniform(60, 90)
     elevation_radian = np.radians(elevation_degree)
-    phi = elevation_radian  # phi is now directly the elevation angle from the vertical axis
+    phi = elevation_radian  # phi is the elevation angle from the vertical axis
+
+    # Calculate the actual center of the ring
+    ring_center = point_cloud_center + np.array([0, radius * np.cos(phi), 0])  # Assuming 'y' up-direction
 
     def camera_position_on_ring(angle):
         # Calculate x, y, z based on spherical coordinates
@@ -92,29 +121,32 @@ def make_cameras_on_ring(point_cloud_center, radius, up_direction, num_cameras, 
         return general_utils.create_pose_matrix(R_wc, camera_loc)
 
     cameras = []
+    locs = list()
     for i in range(num_cameras):
         angle = 2 * np.pi * i / num_cameras  # Uniformly space cameras around the ring
         camera_loc = camera_position_on_ring(angle)
         pose_matrix = make_pose_matrix(camera_loc)
         cameras.append(pose_matrix)
-   
-    # Save ring parameters to a file
+        locs.append(pose_matrix[:3,3])
+
+    # Save ring parameters to a file, including the actual ring center
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     ring_params = {
         "type": "ring",
-        "center": ",".join(map(str, point_cloud_center)),
+        "center": ",".join(map(str, ring_center)),
         "normal": "0,1,0",  # Assuming 'y' up-direction
-        "radius": radius,
-        "elevation_degree": elevation_degree
+        "radius": str(radius * np.sin(phi)),
+        "elevation_degree": str(elevation_degree)
     }
- 
-    with open(os.path.join(output_dir, "ring_params.txt"), "w") as file:
+
+    ring_params_path = os.path.join(output_dir, "ring_params.txt")
+    with open(ring_params_path, "w") as file:
         for key, value in ring_params.items():
             file.write(f"{key}: {value}\n")
- 
 
-    return cameras
+    return cameras, ring_params_path
+
 
 
 def make_cameras(point_cloud_center, radius, up_direction, num_cameras, close=False):
@@ -150,6 +182,7 @@ def make_cameras(point_cloud_center, radius, up_direction, num_cameras, close=Fa
         camera_loc = random_camera_position()
         pose_matrix = make_pose_matrix(camera_loc)
         cameras.append(pose_matrix)
+        #points 
 
     if close:
         # Implement logic to adjust camera positions so they are closer together
