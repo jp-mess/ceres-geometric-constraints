@@ -130,7 +130,7 @@ int main(int argc, char** argv) {
   std::cout << summary.FullReport() << "\n";
 
 
-  SaveBALProblem(bal_problem, "../../problem_encodings/optimized_bal_output.txt");
+  SaveBALProblem(bal_problem, "../../problem_encodings/inverted_optimized_bal_output.txt");
 
 
   return 0;
