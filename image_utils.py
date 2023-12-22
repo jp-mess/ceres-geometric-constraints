@@ -89,6 +89,10 @@ in the point cloud
 """
 def rasterize(cameras,indices_to_project,points,colors):
   import numpy as np 
+  import copy
+
+  cameras = copy.deepcopy(cameras)
+  
 
   pixels = list()
   correspondences = dict()

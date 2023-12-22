@@ -54,10 +54,11 @@ def create_bal_problem_file(correspondences, n_cameras, point_container, true_ca
          # Write the true camera parameters
         for camera in true_cameras:
 
-            camera["extrinsic"] = np.linalg.pinv(camera["extrinsic"])
-
+            extrinsic_copy = np.copy(camera["extrinsic"])
+            extrinsic_copy = np.linalg.pinv(extrinsic_copy) 
+  
             # Convert the rotation matrix to Euler angles (angle-axis)
-            rotation_matrix = camera["extrinsic"][:3, :3]
+            rotation_matrix = extrinsic_copy[:3, :3]
             rotation = R.from_matrix(rotation_matrix)
             angle_axis = rotation.as_rotvec()  # Convert to angle-axis
             angle_axis += np.random.normal(0, rotation_noise_scale, 3)
@@ -67,7 +68,7 @@ def create_bal_problem_file(correspondences, n_cameras, point_container, true_ca
                 file.write(f"{angle_axis[i]}\n")
 
             # Write the translation
-            translation_vector = camera["extrinsic"][:3, 3]
+            translation_vector = extrinsic_copy[:3, 3]
             translation_vector += np.random.normal(0, translation_noise_scale, 3)
             for i in range(3):
                 file.write(f"{translation_vector[i]}\n")
