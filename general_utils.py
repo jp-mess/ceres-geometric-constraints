@@ -1,4 +1,14 @@
 
+def convert_strings_to_float_array(strings):
+    import numpy as np
+    float_array = []
+    for string in strings:
+        # Remove newline characters and split the string into numbers
+        numbers = string.replace('\n', '').split()
+        # Convert each number to float and append to the list
+        float_array.extend([float(num) for num in numbers])
+    return np.array(float_array)
+
 def create_pinhole(fx,fy,cx,cy):
   import numpy as np
   camera_params = np.eye(3)

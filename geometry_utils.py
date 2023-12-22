@@ -25,7 +25,6 @@ def plot_3d_points(points):
     plt.show()
 
 
-
 def create_bal_problem_file(correspondences, n_cameras, point_container, true_cameras, output_file, translation_noise_scale = 0.0, rotation_noise_scale = 0.0, pixel_noise_scale = 0.0):
 
     from scipy.spatial.transform import Rotation as R
@@ -55,8 +54,8 @@ def create_bal_problem_file(correspondences, n_cameras, point_container, true_ca
         for camera in true_cameras:
 
             extrinsic_copy = np.copy(camera["extrinsic"])
-            extrinsic_copy = np.linalg.pinv(extrinsic_copy) 
-  
+            #extrinsic_copy = np.linalg.pinv(extrinsic_copy) 
+ 
             # Convert the rotation matrix to Euler angles (angle-axis)
             rotation_matrix = extrinsic_copy[:3, :3]
             rotation = R.from_matrix(rotation_matrix)
@@ -85,7 +84,7 @@ def create_bal_problem_file(correspondences, n_cameras, point_container, true_ca
             for i in range(3):
                 file.write(f"{point[i]}\n")
 
-def make_cameras_on_ring(point_cloud_center, radius, up_direction, num_cameras, output_dir="manifold_encodings"):
+def make_cameras_on_ring(point_cloud_center, radius, up_direction, num_cameras, ring_params_file=None):
     import numpy as np
     import general_utils
     import os
@@ -130,9 +129,6 @@ def make_cameras_on_ring(point_cloud_center, radius, up_direction, num_cameras, 
         cameras.append(pose_matrix)
         locs.append(pose_matrix[:3,3])
 
-    # Save ring parameters to a file, including the actual ring center
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
     ring_params = {
         "type": "ring",
         "center": ",".join(map(str, ring_center)),
@@ -140,13 +136,13 @@ def make_cameras_on_ring(point_cloud_center, radius, up_direction, num_cameras, 
         "radius": str(radius * np.sin(phi)),
         "elevation_degree": str(elevation_degree)
     }
+  
+    if ring_params_file is not None:
+      with open(ring_params_file, "w") as file:
+          for key, value in ring_params.items():
+              file.write(f"{key}: {value}\n")
 
-    ring_params_path = os.path.join(output_dir, "ring_params.txt")
-    with open(ring_params_path, "w") as file:
-        for key, value in ring_params.items():
-            file.write(f"{key}: {value}\n")
-
-    return cameras, ring_params_path
+    return cameras
 
 
 

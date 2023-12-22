@@ -1,5 +1,5 @@
 
-def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_dir=None, output_name = "ba_problem_input.txt", visualize_frustums=False):
+def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_dir=None, visualize_frustums=False):
   import geometry_utils
   import image_utils
   import general_utils
@@ -22,7 +22,7 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
 
   # bundle adjustment noise parameters
   pix_noise = 0.0
-  pos_noise = 0.0
+  pos_noise = 1.0
   rot_noise = 0.0
 
 
@@ -35,11 +35,10 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
   up_direction = "y"
   cameras = list()
 
-  cameras, manifold_file = geometry_utils.make_cameras_on_ring(center, camera_radius, up_direction, n_cameras)
+  ring_params_file = "manifold_encodings/ring_params.txt"
+  cameras = geometry_utils.make_cameras_on_ring(center, camera_radius, up_direction, n_cameras, ring_params_file=ring_params_file)
   cameras = [general_utils.package_camera(camera, camera_parameters, 'camera_' + str(i)) for i, camera in enumerate(cameras)]
  
-  #import manifold_utils 
-  #manifold_utils.adjust_camera_positions_to_ring(output_file, manifold_file, output_file_path=os.path.join(output_dir,"ring_encoding.txt"))
 
   # subsample point cloud indices
   indices = np.arange(len(pcd.points))
@@ -51,11 +50,18 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
                                                           points=np.array(pcd.points),
                                                           colors=pcd.colors)
   
-  output_dir = "problem_encodings"
-  output_file = os.path.join(output_dir,output_name)
-  geometry_utils.create_bal_problem_file(correspondences, n_cameras, np.array(pcd.points), cameras, output_file,
+  ba_encoding_file = "problem_encodings/ba_problem_input.txt"
+  geometry_utils.create_bal_problem_file(correspondences, n_cameras, np.array(pcd.points), cameras, ba_encoding_file,
                                          pixel_noise_scale=pix_noise, translation_noise_scale=pos_noise, rotation_noise_scale=rot_noise)
-   
+  
+  import ring_utils 
+  ring_encoding_file = "problem_encodings/ring_problem_input.txt"
+  ring_utils.update_bal_problem_with_ring_cameras(ring_params_file, ba_encoding_file, ring_encoding_file)
+  print("residuals before ring projection")
+  ring_utils.print_camera_residuals_from_file(ring_params_file, ba_encoding_file)
+  print("after")
+  ring_utils.print_camera_residuals_from_file(ring_params_file, ring_encoding_file)
+
   if visualize_frustums: 
     import frustum_visualizer
     visualizer = frustum_visualizer.PointCloudCameraVisualizer(pcd, cameras, center)
