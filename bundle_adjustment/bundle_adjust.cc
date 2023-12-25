@@ -165,8 +165,6 @@ void SolveWithQuaternion(const char* filename) {
     double* point = quat_problem.mutable_point_for_observation(i);
 
 
-    ceres::Manifold* quaternion_manifold = new ceres::QuaternionManifold(); // For quaternion.
-    ceres::Manifold* euclidean_manifold = new ceres::EuclideanManifold<6>();
     ceres::Manifold* camera_manifold = new ceres::ProductManifold<ceres::QuaternionManifold, ceres::EuclideanManifold<3>>{};
 
     problem.AddParameterBlock(intrinsics, 3);
