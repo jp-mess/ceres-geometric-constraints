@@ -42,9 +42,13 @@
 
 #include "ceres/ceres.h"
 #include "ceres/rotation.h"
+#include "ceres/manifold.h"
+#include "ceres/product_manifold.h"
 
 #include "BALProblem.h"
 #include "SimpleCost.h"
+#include "QuatProblem.h"
+#include "QuatCost.h"
 
 void SaveBALProblem(const BALProblem& bal_problem, const std::string& output_filename) {
     std::ofstream out_file(output_filename);
@@ -87,51 +91,136 @@ void SaveBALProblem(const BALProblem& bal_problem, const std::string& output_fil
     out_file.close();
 }
 
-int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
-  if (argc != 2) {
-    std::cerr << "usage: simple_bundle_adjuster <bal_problem>\n";
-    return 1;
-  }
+void SaveQuatProblem(const QuatProblem& quat_problem, const std::string& output_filename) {
+    std::ofstream out_file(output_filename);
+    if (!out_file) {
+        std::cerr << "ERROR: unable to open output file " << output_filename << ".\n";
+        return;
+    }
 
-  BALProblem bal_problem;
-  if (!bal_problem.LoadFile(argv[1])) {
-    std::cerr << "ERROR: unable to open file " << argv[1] << "\n";
-    return 1;
-  }
+    // Write the header: number of cameras, number of points, number of observations
+    out_file << quat_problem.num_cameras() << " "
+             << quat_problem.num_points() << " "
+             << quat_problem.num_observations() << "\n";
 
-  const double* observations = bal_problem.observations();
+    // Write the observations
+    const double* observations = quat_problem.observations();
+    for (int i = 0; i < quat_problem.num_observations(); ++i) {
+        int camera_index = quat_problem.camera_index()[i];
+        int point_index = quat_problem.point_index()[i];
+        double obs_x = observations[2 * i];
+        double obs_y = observations[2 * i + 1];
+        out_file << camera_index << " " << point_index << " " << obs_x << " " << obs_y << "\n";
+    }
 
-  // Create residuals for each observation in the bundle adjustment problem. The
-  // parameters for cameras and points are added automatically.
-  ceres::Problem problem;
-  for (int i = 0; i < bal_problem.num_observations(); ++i) {
-    // Each Residual block takes a point and a camera as input and outputs a 2
-    // dimensional residual. Internally, the cost function stores the observed
-    // image location and compares the reprojection against the observation.
+    // Write the optimized camera parameters (converted from quaternion to angle-axis)
+    for (int i = 0; i < quat_problem.num_cameras(); ++i) {
+        const double* camera = quat_problem.camera_for_observation(i);
+        double quaternion[4] = {camera[0], camera[1], camera[2], camera[3]};
+        double angle_axis[3];
+        ceres::QuaternionToAngleAxis(quaternion, angle_axis);
+        
+        for (int j = 0; j < 3; ++j) {
+            out_file << angle_axis[j] << "\n";
+        }
+        for (int j = 4; j < 10; ++j) {  // Start from 4 to skip quaternion part
+            out_file << camera[j] << "\n";
+        }
+    }
 
-    ceres::CostFunction* cost_function = SimpleCost::Create(
-        observations[2 * i + 0], observations[2 * i + 1]);
-    problem.AddResidualBlock(cost_function,
-                             nullptr /* squared loss */,
-                             bal_problem.mutable_camera_for_observation(i),
-                             bal_problem.mutable_point_for_observation(i));
-  }
-
-  // Make Ceres automatically detect the bundle structure. Note that the
-  // standard solver, SPARSE_NORMAL_CHOLESKY, also works fine but it is slower
-  // for standard bundle adjustment problems.
-  ceres::Solver::Options options;
-  options.linear_solver_type = ceres::DENSE_SCHUR;
-  options.minimizer_progress_to_stdout = true;
-
-  ceres::Solver::Summary summary;
-  ceres::Solve(options, &problem, &summary);
-  std::cout << summary.FullReport() << "\n";
-
-
-  SaveBALProblem(bal_problem, "../../problem_encodings/inverted_optimized_bal_output.txt");
-
-
-  return 0;
+    // Write the points
+    for (int i = 0; i < quat_problem.num_points(); ++i) {
+        const double* point = quat_problem.points() + i * 3;
+        for (int j = 0; j < 3; ++j) {
+            out_file << point[j] << "\n";
+        }
+    }
+    
+    out_file.close();
 }
+
+void SolveWithQuaternion(const char* filename) {
+    QuatProblem quat_problem;
+    if (!quat_problem.LoadFile(filename)) {
+      std::cerr << "ERROR: unable to open file " << filename << "\n";
+      exit(1);
+    }
+
+    const double* observations = quat_problem.observations();
+    ceres::Problem problem;
+
+ for (int i = 0; i < quat_problem.num_observations(); ++i) {
+    ceres::CostFunction* cost_function = QuatCost::Create(
+        observations[2 * i + 0], observations[2 * i + 1]);
+
+    // Get the entire camera parameter block (which includes quaternion, translation, and intrinsics)
+    double* camera = quat_problem.mutable_camera_for_observation(i);
+    double* point = quat_problem.mutable_point_for_observation(i);
+
+    // Add the residual block to the problem.
+    problem.AddResidualBlock(cost_function, nullptr /* squared loss */, camera, point);
+}
+
+
+    ceres::Solver::Options options;
+    options.linear_solver_type = ceres::DENSE_SCHUR;
+    options.minimizer_progress_to_stdout = true;
+
+    ceres::Solver::Summary summary;
+    ceres::Solve(options, &problem, &summary);
+    std::cout << summary.FullReport() << "\n";
+
+    SaveQuatProblem(quat_problem, "test.txt");
+}
+
+void SolveWithAngleAxis(const char* filename) {
+    BALProblem bal_problem;
+    if (!bal_problem.LoadFile(filename)) {
+      std::cerr << "ERROR: unable to open file " << filename << "\n";
+      exit(1);
+    }
+
+    const double* observations = bal_problem.observations();
+    ceres::Problem problem;
+
+    for (int i = 0; i < bal_problem.num_observations(); ++i) {
+      ceres::CostFunction* cost_function = SimpleCost::Create(
+          observations[2 * i + 0], observations[2 * i + 1]);
+
+      double* camera = bal_problem.mutable_camera_for_observation(i);
+      double* point = bal_problem.mutable_point_for_observation(i);
+
+      problem.AddResidualBlock(cost_function, nullptr, camera, point);
+    }
+
+    ceres::Solver::Options options;
+    options.linear_solver_type = ceres::DENSE_SCHUR;
+    options.minimizer_progress_to_stdout = true;
+
+    ceres::Solver::Summary summary;
+    ceres::Solve(options, &problem, &summary);
+    std::cout << summary.FullReport() << "\n";
+
+}
+
+int main(int argc, char** argv) {
+    google::InitGoogleLogging(argv[0]);
+    if (argc != 2) {
+        std::cerr << "usage: simple_bundle_adjuster <bal_problem>\n";
+        return 1;
+    }
+
+    bool useQuaternionSystem = true; // Set this to false to use the old system.
+
+    if (useQuaternionSystem) {
+        SolveWithQuaternion(argv[1]);
+    } else {
+        SolveWithAngleAxis(argv[1]);
+    }
+
+    return 0;
+}
+
+
+
+

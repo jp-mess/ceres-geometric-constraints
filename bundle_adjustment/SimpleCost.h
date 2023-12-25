@@ -9,7 +9,6 @@
 #include "ceres/ceres.h"
 #include "ceres/rotation.h"
 
-
 struct SimpleCost {
   SimpleCost(double observed_x, double observed_y)
       : observed_x(observed_x), observed_y(observed_y) {}

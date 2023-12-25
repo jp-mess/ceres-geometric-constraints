@@ -16,3 +16,5 @@ problem_encodings/*
 
 # As well as manifold encodings, though these are small
 manifold_encodings/*
+
+.vscode/

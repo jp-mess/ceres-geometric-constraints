@@ -3,6 +3,8 @@
 
 CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.o: /home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/bundle_adjust.cc \
   /home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/BALProblem.h \
+  /home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/QuatCost.h \
+  /home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/QuatProblem.h \
   /home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/SimpleCost.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
@@ -892,11 +894,7 @@ CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.o: /home/jackbuntu/workspace/3D-Al
 
 /usr/include/eigen3/Eigen/src/Core/arch/SSE/PacketMath.h:
 
-/usr/include/c++/9/initializer_list:
-
-/usr/include/eigen3/Eigen/src/Core/Array.h:
-
-/usr/include/eigen3/Eigen/src/Core/Select.h:
+/usr/include/eigen3/Eigen/src/Core/arch/SSE/Complex.h:
 
 /usr/include/c++/9/bits/std_abs.h:
 
@@ -928,15 +926,9 @@ CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.o: /home/jackbuntu/workspace/3D-Al
 
 /usr/include/c++/9/cmath:
 
-/usr/include/c++/9/bits/erase_if.h:
-
 /usr/include/c++/9/bits/vector.tcc:
 
-/usr/include/eigen3/Eigen/src/plugins/MatrixCwiseBinaryOps.h:
-
-/usr/include/c++/9/climits:
-
-/usr/include/c++/9/bits/uniform_int_dist.h:
+/usr/include/c++/9/bits/erase_if.h:
 
 /usr/include/c++/9/bits/stringfwd.h:
 
@@ -1023,14 +1015,6 @@ CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.o: /home/jackbuntu/workspace/3D-Al
 /usr/include/c++/9/bits/shared_ptr_atomic.h:
 
 /usr/include/c++/9/bits/stl_iterator_base_funcs.h:
-
-/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
-
-/usr/include/eigen3/Eigen/Cholesky:
-
-/usr/include/c++/9/bits/stl_tempbuf.h:
-
-/usr/include/c++/9/cstdlib:
 
 /usr/include/alloca.h:
 
@@ -1168,6 +1152,24 @@ CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.o: /home/jackbuntu/workspace/3D-Al
 
 /usr/include/eigen3/Eigen/src/Core/CoreIterators.h:
 
+/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/QuatCost.h:
+
+/usr/include/eigen3/Eigen/src/plugins/MatrixCwiseBinaryOps.h:
+
+/usr/include/c++/9/bits/uniform_int_dist.h:
+
+/usr/include/c++/9/climits:
+
+/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
+
+/usr/include/c++/9/bits/stl_tempbuf.h:
+
+/usr/include/c++/9/cstdlib:
+
+/usr/include/eigen3/Eigen/Cholesky:
+
+/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/QuatProblem.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
 
 /usr/include/asm-generic/errno.h:
@@ -1200,14 +1202,6 @@ CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.o: /home/jackbuntu/workspace/3D-Al
 
 /usr/include/eigen3/Eigen/Eigenvalues:
 
-/usr/local/include/ceres/internal/numeric_diff.h:
-
-/usr/include/features.h:
-
-/usr/include/c++/9/bits/codecvt.h:
-
-/usr/include/c++/9/bits/enable_special_members.h:
-
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
 
 /usr/include/eigen3/Eigen/src/plugins/BlockMethods.h:
@@ -1225,6 +1219,14 @@ CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.o: /home/jackbuntu/workspace/3D-Al
 /usr/include/eigen3/Eigen/src/Core/Inverse.h:
 
 /usr/include/c++/9/algorithm:
+
+/usr/local/include/ceres/internal/numeric_diff.h:
+
+/usr/include/features.h:
+
+/usr/include/c++/9/bits/codecvt.h:
+
+/usr/include/c++/9/bits/enable_special_members.h:
 
 /usr/include/c++/9/ext/aligned_buffer.h:
 
@@ -1268,10 +1270,6 @@ CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.o: /home/jackbuntu/workspace/3D-Al
 
 /usr/include/c++/9/bits/hashtable.h:
 
-/usr/include/c++/9/functional:
-
-/usr/include/c++/9/bits/invoke.h:
-
 /usr/include/x86_64-linux-gnu/bits/floatn-common.h:
 
 /usr/include/c++/9/bits/ios_base.h:
@@ -1288,11 +1286,21 @@ CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.o: /home/jackbuntu/workspace/3D-Al
 
 /usr/include/eigen3/Eigen/src/Core/SolveTriangular.h:
 
-/usr/include/eigen3/Eigen/src/Core/arch/SSE/Complex.h:
-
 /usr/include/c++/9/bits/locale_classes.h:
 
 /usr/include/c++/9/stdlib.h:
+
+/usr/include/eigen3/Eigen/src/Core/util/ReenableStupidWarnings.h:
+
+/usr/include/c++/9/bits/stl_relops.h:
+
+/usr/include/eigen3/Eigen/src/Core/MatrixBase.h:
+
+/usr/include/c++/9/bits/algorithmfwd.h:
+
+/usr/include/x86_64-linux-gnu/c++/9/bits/cpu_defines.h:
+
+/usr/include/eigen3/Eigen/src/Core/Diagonal.h:
 
 /usr/include/c++/9/bits/stl_tree.h:
 
@@ -1310,17 +1318,15 @@ CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.o: /home/jackbuntu/workspace/3D-Al
 
 /usr/include/c++/9/bits/predefined_ops.h:
 
-/usr/include/eigen3/Eigen/src/Core/util/ReenableStupidWarnings.h:
+/usr/include/c++/9/bits/invoke.h:
 
-/usr/include/c++/9/bits/stl_relops.h:
+/usr/include/c++/9/functional:
 
-/usr/include/eigen3/Eigen/src/Core/MatrixBase.h:
+/usr/include/c++/9/initializer_list:
 
-/usr/include/c++/9/bits/algorithmfwd.h:
+/usr/include/eigen3/Eigen/src/Core/Array.h:
 
-/usr/include/x86_64-linux-gnu/c++/9/bits/cpu_defines.h:
-
-/usr/include/eigen3/Eigen/src/Core/Diagonal.h:
+/usr/include/eigen3/Eigen/src/Core/Select.h:
 
 /usr/include/c++/9/iosfwd:
 
