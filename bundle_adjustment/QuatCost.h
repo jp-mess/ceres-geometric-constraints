@@ -14,14 +14,15 @@ struct QuatCost {
       : observed_x(observed_x), observed_y(observed_y) {}
 
   template <typename T>
-  bool operator()(const T* const camera, // Camera parameters
+  bool operator()(const T* const extrinsic_params, // Camera parameters
+                  const T* const intrinsic_params, // frozen intrinsics
                   const T* const point,  // 3D point
                   T* residuals) const {
 
     // Camera parameters: quaternion (4), translation (3), intrinsics (3)
-    const T* quaternion = camera;
-    const T* translation = camera + 4;
-    const T* intrinsics = camera + 7;
+    const T* quaternion = extrinsic_params;
+    const T* translation = extrinsic_params + 4;
+    const T* intrinsics = intrinsic_params;
 
     // Conjugate of the quaternion for inverse rotation.
     T conjugate_quaternion[4] = {quaternion[0], 
@@ -63,7 +64,7 @@ struct QuatCost {
     // 2: residuals (pixels)
     // 10: camera parameter block (3 translation, 4 quaternion, 3 intrinsics)
     // 3: world point parameter block
-    return new ceres::AutoDiffCostFunction<QuatCost, 2, 10, 3>(
+    return new ceres::AutoDiffCostFunction<QuatCost, 2, 7, 3, 3>(
         new QuatCost(observed_x, observed_y));
   }
 

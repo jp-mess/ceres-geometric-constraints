@@ -75,12 +75,13 @@ void CheckQuatReprojectionErrors(const QuatProblem& quat_problem) {
         QuatCost cost_functor(observed_x, observed_y);
 
         // Get camera (including quaternion, translation, and intrinsics) and point for this observation
-        const double* camera = quat_problem.camera_for_observation(i);
+        const double* extrinsics = quat_problem.extrinsic_for_observation(i);
+        const double* intrinsics = quat_problem.intrinsic_for_observation(i);
         const double* point = quat_problem.point_for_observation(i);
 
         // Compute the reprojection error
         double residuals[2];
-        cost_functor(camera, point, residuals);
+        cost_functor(extrinsics, intrinsics, point, residuals);
 
         // Compute the squared error
         double squared_error = residuals[0] * residuals[0] + residuals[1] * residuals[1];

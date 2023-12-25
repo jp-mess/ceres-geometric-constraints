@@ -6,8 +6,8 @@
 
 class QuatProblem {
  public:
-  QuatProblem() : num_cameras_(0), num_points_(0), num_observations_(0), num_parameters_(0),
-                  point_index_(nullptr), camera_index_(nullptr), observations_(nullptr), parameters_(nullptr) {}
+  // QuatProblem() : num_cameras_(0), num_points_(0), num_observations_(0), num_parameters_(0),
+  //                 point_index_(nullptr), camera_index_(nullptr), observations_(nullptr), parameters_(nullptr) {}
 
   ~QuatProblem() {
     delete[] point_index_;
@@ -40,7 +40,21 @@ class QuatProblem {
 
   double* mutable_point_for_observation(int i) {
     return mutable_points() + point_index_[i] * 3;
-}
+  }
+  
+  double* mutable_extrinsic_for_observation(int i) {
+    return mutable_cameras() + camera_index_[i] * 10;
+  }
+  double* mutable_intrinsic_for_observation(int i) {
+    return mutable_cameras() + camera_index_[i] * 10 + 7; // Offset by 7 to reach intrinsic parameters
+  }
+  const double* extrinsic_for_observation(int i) const {
+    return parameters_ + camera_index_[i] * 10;
+  }
+  const double* intrinsic_for_observation(int i) const {
+    return parameters_ + camera_index_[i] * 10 + 7; // Offset by 7 to reach intrinsic parameters
+  }
+
 
   bool LoadFile(const char* filename) {
     FILE* fptr = fopen(filename, "r");

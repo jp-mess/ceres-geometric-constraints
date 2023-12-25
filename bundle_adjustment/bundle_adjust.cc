@@ -50,6 +50,7 @@
 #include "QuatProblem.h"
 #include "QuatCost.h"
 
+
 void SaveBALProblem(const BALProblem& bal_problem, const std::string& output_filename) {
     std::ofstream out_file(output_filename);
     if (!out_file) {
@@ -113,18 +114,23 @@ void SaveQuatProblem(const QuatProblem& quat_problem, const std::string& output_
         out_file << camera_index << " " << point_index << " " << obs_x << " " << obs_y << "\n";
     }
 
-    // Write the optimized camera parameters (converted from quaternion to angle-axis)
+    // Write the optimized camera parameters (extrinsic and intrinsic for each camera)
     for (int i = 0; i < quat_problem.num_cameras(); ++i) {
-        const double* camera = quat_problem.camera_for_observation(i);
-        double quaternion[4] = {camera[0], camera[1], camera[2], camera[3]};
+        const double* extrinsic = quat_problem.extrinsic_for_observation(i);
+        double quaternion[4] = {extrinsic[0], extrinsic[1], extrinsic[2], extrinsic[3]};
         double angle_axis[3];
         ceres::QuaternionToAngleAxis(quaternion, angle_axis);
-        
+
         for (int j = 0; j < 3; ++j) {
             out_file << angle_axis[j] << "\n";
         }
-        for (int j = 4; j < 10; ++j) {  // Start from 4 to skip quaternion part
-            out_file << camera[j] << "\n";
+        for (int j = 3; j < 7; ++j) {  // Translation part
+            out_file << extrinsic[j] << "\n";
+        }
+
+        const double* intrinsic = quat_problem.intrinsic_for_observation(i);
+        for (int j = 0; j < 3; ++j) {
+            out_file << intrinsic[j] << "\n";
         }
     }
 
@@ -154,11 +160,23 @@ void SolveWithQuaternion(const char* filename) {
         observations[2 * i + 0], observations[2 * i + 1]);
 
     // Get the entire camera parameter block (which includes quaternion, translation, and intrinsics)
-    double* camera = quat_problem.mutable_camera_for_observation(i);
+    double* extrinsics = quat_problem.mutable_extrinsic_for_observation(i);
+    double* intrinsics = quat_problem.mutable_intrinsic_for_observation(i);
     double* point = quat_problem.mutable_point_for_observation(i);
 
+
+    ceres::Manifold* quaternion_manifold = new ceres::QuaternionManifold(); // For quaternion.
+    ceres::Manifold* euclidean_manifold = new ceres::EuclideanManifold<6>();
+    ceres::Manifold* camera_manifold = new ceres::ProductManifold<ceres::QuaternionManifold, ceres::EuclideanManifold<3>>{};
+
+    problem.AddParameterBlock(intrinsics, 3);
+    problem.SetParameterBlockConstant(intrinsics);
+
+    problem.AddParameterBlock(extrinsics, 7, camera_manifold); // assuming camera has 7 parameters (4 for quaternion, 3 for translation)
+
     // Add the residual block to the problem.
-    problem.AddResidualBlock(cost_function, nullptr /* squared loss */, camera, point);
+    problem.AddResidualBlock(cost_function, nullptr /* squared loss */, extrinsics, intrinsics, point);
+
 }
 
 
