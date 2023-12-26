@@ -6,26 +6,73 @@
 #include <string>
 #include <Eigen/Dense>
 
-class RingParameterization : public ceres::LocalParameterization {
+#include "ceres/manifold.h"
+
+#include <cmath>
+
+
+Eigen::Vector3d ThetaTo3DPoint(double theta, 
+                               const Eigen::Vector3d& center, 
+                               const Eigen::Vector3d& normal, 
+                               double radius) {
+    // Step 1: Create a reference direction within the plane
+    Eigen::Vector3d reference_direction = Eigen::Vector3d::UnitX() - (Eigen::Vector3d::UnitX().dot(normal)) * normal;
+    reference_direction.normalize();
+
+    // Compute the orthogonal direction within the plane
+    Eigen::Vector3d orthogonal_direction = reference_direction.cross(normal); // bad: normal.cross(reference_direction);
+
+    // Step 2: Calculate the point's position in the plane
+    Eigen::Vector3d point_in_plane = radius * (cos(theta) * reference_direction + sin(theta) * orthogonal_direction);
+
+    // Step 3: Translate the point back to the original coordinate system
+    Eigen::Vector3d point_in_original_space = point_in_plane + center;
+
+    return point_in_original_space;
+}
+
+double ProjectPointOntoRing(const Eigen::Vector3d& point, 
+                            const Eigen::Vector3d& center, 
+                            const Eigen::Vector3d& normal) {
+    // Step 1: Translate the point to the ring's coordinate system
+    Eigen::Vector3d translated_point = point - center;
+
+    // Step 2: Project the translated point onto the plane defined by the ring's normal
+    Eigen::Vector3d projected_point = translated_point - (translated_point.dot(normal)) * normal;
+
+    // Step 3: Find the theta in the plane
+    // Choose an arbitrary direction in the plane as the reference for theta = 0
+    Eigen::Vector3d reference_direction = Eigen::Vector3d::UnitX() - (Eigen::Vector3d::UnitX().dot(normal)) * normal;
+    reference_direction.normalize();
+
+    // Compute the angle between the reference direction and the projected point
+    double theta = atan2(projected_point.dot(Eigen::Vector3d::UnitZ()), projected_point.dot(reference_direction));
+
+    return theta;
+}
+
+/*
+class RingManifold : public ceres::Manifold {
 public:
-    RingParameterization(const Ring& ring) : ring_(ring) {}
+    RingManifold(const Ring& ring) : ring_(ring) {}
 
     virtual bool Plus(const double* x, const double* delta, double* x_plus_delta) const override {
         // Implement the logic to move on the ring
         return true;
     }
 
-    virtual bool ComputeJacobian(const double* x, double* jacobian) const override {
+    //virtual bool ComputeJacobian(const double* x, double* jacobian) const override {
         // Implement the Jacobian computation
-        return true;
-    }
+    //    return true;
+    //}
 
-    virtual int GlobalSize() const override { return 3; } // Size of the point on the manifold
-    virtual int LocalSize() const override { return 2; } // Size of the local parameterization
+    virtual int AmbientSize() const override { return 3; } // Size of the space in which the manifold is embedded
+    virtual int TangentSize() const override { return 2; } // Size of a point on the manifold
 
 private:
     Ring ring_;
 };
+*/
 
 
 class Ring {

@@ -142,6 +142,19 @@ assess_reprojection/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/assess_reprojection.dir/build.make CMakeFiles/assess_reprojection.dir/build
 .PHONY : assess_reprojection/fast
 
+#=============================================================================
+# Target rules for targets named ring_test
+
+# Build rule for target.
+ring_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ring_test
+.PHONY : ring_test
+
+# fast build rule for target.
+ring_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ring_test.dir/build.make CMakeFiles/ring_test.dir/build
+.PHONY : ring_test/fast
+
 assess_reprojection.o: assess_reprojection.cc.o
 .PHONY : assess_reprojection.o
 
@@ -190,6 +203,30 @@ bundle_adjust.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bundle_adjust.dir/build.make CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.s
 .PHONY : bundle_adjust.cc.s
 
+ring_test.o: ring_test.cc.o
+.PHONY : ring_test.o
+
+# target to build an object file
+ring_test.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ring_test.dir/build.make CMakeFiles/ring_test.dir/ring_test.cc.o
+.PHONY : ring_test.cc.o
+
+ring_test.i: ring_test.cc.i
+.PHONY : ring_test.i
+
+# target to preprocess a source file
+ring_test.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ring_test.dir/build.make CMakeFiles/ring_test.dir/ring_test.cc.i
+.PHONY : ring_test.cc.i
+
+ring_test.s: ring_test.cc.s
+.PHONY : ring_test.s
+
+# target to generate assembly for a file
+ring_test.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ring_test.dir/build.make CMakeFiles/ring_test.dir/ring_test.cc.s
+.PHONY : ring_test.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -200,12 +237,16 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... assess_reprojection"
 	@echo "... bundle_adjust"
+	@echo "... ring_test"
 	@echo "... assess_reprojection.o"
 	@echo "... assess_reprojection.i"
 	@echo "... assess_reprojection.s"
 	@echo "... bundle_adjust.o"
 	@echo "... bundle_adjust.i"
 	@echo "... bundle_adjust.s"
+	@echo "... ring_test.o"
+	@echo "... ring_test.i"
+	@echo "... ring_test.s"
 .PHONY : help
 
 
