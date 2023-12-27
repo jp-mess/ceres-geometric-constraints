@@ -22,7 +22,7 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
 
   # bundle adjustment noise parameters
   pix_noise = 0.0
-  pos_noise = 1.0
+  pos_noise = 0.0
   rot_noise = 0.0
 
 

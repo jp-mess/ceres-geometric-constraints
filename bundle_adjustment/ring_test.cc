@@ -2,9 +2,8 @@
 #include "ceres/ceres.h"
 #include "ceres/rotation.h"
 #include <iostream>
+#include <string>
 
-#include "Ring.h" // Assuming this header includes the RingProblem class and necessary dependencies
-#include <iostream>
 
 void SaveRingProblem(const RingProblem& ring_problem, const std::string& output_filename) {
     std::ofstream out_file(output_filename);
@@ -61,35 +60,38 @@ void SaveRingProblem(const RingProblem& ring_problem, const std::string& output_
     out_file.close();
 }
 
-int main(int argc, char** argv) {
-    if (argc != 3) {
-        std::cout << "Usage: " << argv[0] << " BAL_file Ring_params_file" << std::endl;
-        return 1;
-    }
-
-    const char* bal_file = argv[1];
-    const char* ring_file = argv[2];
-
+void SolveWithRing(const char* bal_file, const char* ring_file) {
     RingProblem ring_problem;
 
-    // Load ring parameters from the file
-    if (!ring_problem.LoadRingFile(ring_file)) {
-        std::cout << "Error loading ring parameters file: " << ring_file << std::endl;
+    // Load BAL and Ring encoding files
+    if (!ring_problem.LoadFiles(bal_file, ring_file)) {
+        std::cout << "Error loading BAL or Ring files: " << bal_file << std::endl;
+    }
+
+    const double* observations = ring_problem.observations();
+    ceres::Problem problem;
+
+
+}
+
+
+
+int main(int argc, char** argv) {
+    google::InitGoogleLogging(argv[0]);
+
+    if (argc != 4) {
+        std::cerr << "Usage: bundle_adjuster <bal_problem> <geometry_params> <geometry_type>\n";
         return 1;
     }
 
-    // Load BAL encoding file
-    if (!ring_problem.LoadFile(bal_file)) {
-        std::cout << "Error loading BAL file: " << bal_file << std::endl;
-        return 1;
+    std::string geometryType = argv[3];
+
+    if (geometryType == "ring") {
+        SolveWithRing(argv[1], argv[2]);
+    } else {
+        std::cerr << "Unsupported geometry type: " << geometryType << std::endl;
+        return 1;  // Return error for unsupported geometry types
     }
-
-    // At this point, ring_problem is loaded with the ring parameters and the BAL encoding
-
-    // Further processing can be done here...
-
-    SaveRingProblem(ring_problem, "out.txt");
 
     return 0;
 }
-

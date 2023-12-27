@@ -10,6 +10,7 @@
 
 #include "ceres/manifold.h"
 #include "ceres/rotation.h"
+#include "ceres/ceres.h"
 
 #include <cmath>
 
@@ -41,6 +42,27 @@ Eigen::Vector3d ThetaTo3DPoint(double theta,
     return point_in_original_space;
 }
 
+template <typename T>
+Eigen::Matrix<T, 3, 1> ThetaTo3DPoint(const T& theta, 
+                                      const Eigen::Matrix<T, 3, 1>& center, 
+                                      const Eigen::Matrix<T, 3, 1>& normal, 
+                                      const T& radius) {
+    // Step 1: Create a reference direction within the plane
+    Eigen::Matrix<T, 3, 1> reference_direction = Eigen::Matrix<T, 3, 1>::UnitX() - (Eigen::Matrix<T, 3, 1>::UnitX().dot(normal)) * normal;
+    reference_direction.normalize();
+
+    // Compute the orthogonal direction within the plane
+    Eigen::Matrix<T, 3, 1> orthogonal_direction = reference_direction.cross(normal);
+
+    // Step 2: Calculate the point's position in the plane
+    Eigen::Matrix<T, 3, 1> point_in_plane = radius * (cos(theta) * reference_direction + sin(theta) * orthogonal_direction);
+
+    // Step 3: Translate the point back to the original coordinate system
+    Eigen::Matrix<T, 3, 1> point_in_original_space = point_in_plane + center;
+
+    return point_in_original_space;
+}
+
 double ProjectPointOntoRing(const Eigen::Vector3d& point, 
                             const Eigen::Vector3d& center, 
                             const Eigen::Vector3d& normal) {
@@ -60,8 +82,6 @@ double ProjectPointOntoRing(const Eigen::Vector3d& point,
 
     return theta;
 }
-
-
 
 
 class Ring {
@@ -119,6 +139,85 @@ Ring LoadRingParameters(const std::string& file_path) {
     return Ring(center, normal, radius, elevation_degree);
 }
 
+struct RingCost {
+    RingCost(double observed_x, double observed_y)
+        : observed_x(observed_x), observed_y(observed_y) {}
+
+    template <typename T>
+    bool operator()(const T* const extrinsic_params, // Camera parameters
+                    const T* const intrinsic_params, // frozen intrinsics
+                    const T* const point,  // 3D point
+                    const T* const ring_params, // Ring parameters
+                    T* residuals) const {
+
+
+        // Camera parameters: quaternion (4), translation (3), intrinsics (3)
+        const T* quaternion = extrinsic_params;
+        const T* intrinsics = intrinsic_params;
+
+        // Conjugate of the quaternion for inverse rotation.
+        T conjugate_quaternion[4] = {quaternion[0], 
+                                    -quaternion[1], 
+                                    -quaternion[2], 
+                                    -quaternion[3]};
+
+ 
+        const T& theta = extrinsic_params[4];  // Theta is the fifth parameter
+
+        // Extract the ring parameters: center (3), normal (3), radius (1)
+        Eigen::Matrix<T, 3, 1> center;
+        Eigen::Matrix<T, 3, 1> normal;
+        center << ring_params[0], ring_params[1], ring_params[2];
+        normal << ring_params[3], ring_params[4], ring_params[5];
+        const T& radius = ring_params[6];
+
+        // Convert theta back to translation
+        Eigen::Matrix<T, 3, 1> translation = ThetaTo3DPoint(theta, center, normal, radius);
+
+        // Apply inverse translation: point - translation.
+        T translated_point[3] = {point[0] - translation[0],
+                                point[1] - translation[1],
+                                point[2] - translation[2]};
+
+           // Rotate the translated point using the conjugate of the camera quaternion.
+        T rotated_translated_point[3];
+        ceres::QuaternionRotatePoint(conjugate_quaternion, translated_point, rotated_translated_point);
+
+        // Project the 3D point onto the 2D camera plane.
+        const T& focal = intrinsics[0];
+        const T& cx = intrinsics[1];
+        const T& cy = intrinsics[2];
+
+        const T kEpsilon = T(1e-4);
+        const T xp = rotated_translated_point[0] / (rotated_translated_point[2] + kEpsilon);
+        const T yp = rotated_translated_point[1] / (rotated_translated_point[2] + kEpsilon);
+
+        const T predicted_x = focal * xp + cx;
+        const T predicted_y = focal * yp + cy;
+
+        // The error is the difference between the predicted and observed positions.
+        residuals[0] = predicted_x - observed_x;
+        residuals[1] = predicted_y - observed_y;
+
+        return true;
+    }
+
+    static ceres::CostFunction* Create(const double observed_x,
+                                       const double observed_y) {
+        // Adjust the size of the parameter blocks for RingCost
+        // 5: camera parameter block (4 quaternion, 1 theta)
+        // 3: intrinsic parameter block
+        // 3: world point parameter block
+        // 7: ring parameter block (3 center, 3 normal, 1 radius)
+        return new ceres::AutoDiffCostFunction<RingCost, 2, 5, 3, 3, 7>(
+            new RingCost(observed_x, observed_y));
+    }
+
+    double observed_x, observed_y;
+};
+
+
+
 class RingProblem {
 public:
     int n_extrinsic = 5;
@@ -150,6 +249,14 @@ public:
     const double* extrinsic_for_observation(int i) const { return parameters_ + camera_index_[i] * n_camera_params; }
     const double* intrinsic_for_observation(int i) const { return parameters_ + camera_index_[i] * n_camera_params + n_extrinsic; }
     const Ring& ring() const { return ring_;}
+    double* mutable_geometry_params() {
+        return parameters_ + ring_params_start_index;
+    }
+    const double* geometry_params() const {
+        int ring_params_start_index = n_camera_params * num_cameras_ + 3 * num_points_;
+        return parameters_ + ring_params_start_index;
+    }
+
 
     bool LoadRingFile(const char* ring_file_path) {
         try {
@@ -161,8 +268,11 @@ public:
         }
     }
 
-    bool LoadFile(const char* filename) {
-        FILE* fptr = fopen(filename, "r");
+    bool LoadFiles(const char* bal_file, const char* ring_file_path) {
+
+        LoadRingFile(ring_file_path);
+
+        FILE* fptr = fopen(bal_file, "r");
         if (fptr == nullptr) {
             return false;
         }
@@ -175,8 +285,28 @@ public:
         camera_index_ = new int[num_observations_];
         observations_ = new double[2 * num_observations_];
 
-        num_parameters_ = n_camera_params * num_cameras_ + 3 * num_points_;
+        int n_geometry_params = 3 + 3 + 1; // Center + Normal + Radius
+        int n_result_params = n_camera_params * num_cameras_ + 3 * num_points_;
+        num_parameters_ = n_result_params + n_geometry_params;
         parameters_ = new double[num_parameters_];
+
+        // Index where the ring parameters start
+        ring_params_start_index = n_result_params;
+
+        // Store the ring's center coordinates
+        parameters_[ring_params_start_index] = ring_.center().x();
+        parameters_[ring_params_start_index + 1] = ring_.center().y();
+        parameters_[ring_params_start_index + 2] = ring_.center().z();
+
+        // Store the ring's normal vector
+        parameters_[ring_params_start_index + 3] = ring_.normal().x();
+        parameters_[ring_params_start_index + 4] = ring_.normal().y();
+        parameters_[ring_params_start_index + 5] = ring_.normal().z();
+
+        // Store the ring's radius
+        parameters_[ring_params_start_index + 6] = ring_.radius();
+        
+        
 
         for (int i = 0; i < num_observations_; ++i) {
             FscanfOrDie(fptr, "%d", camera_index_ + i);
@@ -233,6 +363,7 @@ private:
     int num_points_;
     int num_observations_;
     int num_parameters_;
+    int ring_params_start_index;
 
     int* point_index_;
     int* camera_index_;
