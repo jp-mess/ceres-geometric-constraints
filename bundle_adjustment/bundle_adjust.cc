@@ -49,7 +49,63 @@
 #include "SimpleCost.h"
 #include "QuatProblem.h"
 #include "QuatCost.h"
+#include "Ring.h"
+#include "angle_manifold.h"
 
+void SaveRingProblem(const RingProblem& ring_problem, const std::string& output_filename) {
+    std::ofstream out_file(output_filename);
+    if (!out_file) {
+        std::cerr << "ERROR: unable to open output file " << output_filename << ".\n";
+        return;
+    }
+
+    // Write the header: number of cameras, number of points, number of observations
+    out_file << ring_problem.num_cameras() << " "
+             << ring_problem.num_points() << " "
+             << ring_problem.num_observations() << "\n";
+
+    // Write the observations
+    const double* observations = ring_problem.observations();
+    for (int i = 0; i < ring_problem.num_observations(); ++i) {
+        int camera_index = ring_problem.camera_index()[i];
+        int point_index = ring_problem.point_index()[i];
+        double obs_x = observations[2 * i];
+        double obs_y = observations[2 * i + 1];
+        out_file << camera_index << " " << point_index << " " << obs_x << " " << obs_y << "\n";
+    }
+
+    // Write the optimized camera parameters (extrinsic and intrinsic for each camera)
+    for (int i = 0; i < ring_problem.num_cameras(); ++i) {
+        const double* extrinsic = ring_problem.extrinsic_for_observation(i);
+        double quaternion[4] = {extrinsic[0], extrinsic[1], extrinsic[2], extrinsic[3]};
+        double angle_axis[3];
+        ceres::QuaternionToAngleAxis(quaternion, angle_axis);
+
+        // Write angle-axis representation (3 lines)
+        for (int j = 0; j < 3; ++j) {
+            out_file << angle_axis[j] << "\n";
+        }
+
+        // Convert theta back to translation and write translation (3 lines)
+        double theta = extrinsic[4];  // Theta is the fifth parameter
+        Eigen::Vector3d translation = ThetaTo3DPoint(theta, ring_problem.ring().center(), ring_problem.ring().normal(), ring_problem.ring().radius());
+        out_file << translation.x() << "\n" << translation.y() << "\n" << translation.z() << "\n";
+
+        // Write intrinsic parameters (3 lines)
+        const double* intrinsic = ring_problem.intrinsic_for_observation(i);
+        for (int j = 0; j < 3; ++j) {
+            out_file << intrinsic[j] << "\n";
+        }
+    }
+
+    // Write the points (each coordinate on a separate line)
+    for (int i = 0; i < ring_problem.num_points(); ++i) {
+        const double* point = ring_problem.points() + i * 3;
+        out_file << point[0] << "\n" << point[1] << "\n" << point[2] << "\n";
+    }
+    
+    out_file.close();
+}
 
 void SaveBALProblem(const BALProblem& bal_problem, const std::string& output_filename) {
     std::ofstream out_file(output_filename);
@@ -219,19 +275,86 @@ void SolveWithAngleAxis(const char* filename) {
 
 }
 
+void SolveWithRing(const char* filename, const char* ring_params_filename) {
+    RingProblem ring_problem;
+    if (!ring_problem.LoadFiles(filename, ring_params_filename) || !ring_problem.LoadRingFile(ring_params_filename)) {
+      std::cerr << "ERROR: unable to open file " << filename << "\n";
+      exit(1);
+    }
+
+    const double* observations = ring_problem.observations();
+    ceres::Problem problem;
+
+    for (int i = 0; i < ring_problem.num_observations(); ++i) {
+        ceres::CostFunction* cost_function = RingCost::Create(
+            observations[2 * i + 0], observations[2 * i + 1]);
+
+        // Get camera parameters and point for this observation
+        double* extrinsics = ring_problem.mutable_extrinsic_for_observation(i);
+        double* intrinsics = ring_problem.mutable_intrinsic_for_observation(i);
+        double* point = ring_problem.mutable_point_for_observation(i);
+        double* geometry = ring_problem.mutable_geometry_params();
+
+        // ceres::Manifold* angle_manifold = AngleManifold::Create();
+
+        // Use a product manifold of AngleManifold (for theta) and QuaternionManifold (for the quaternion)
+        // ceres::Manifold* camera_manifold = new ceres::ProductManifold<AngleManifold, ceres::QuaternionManifold>{};
+
+        problem.AddParameterBlock(intrinsics, 3);
+        problem.SetParameterBlockConstant(intrinsics);
+
+        problem.AddParameterBlock(geometry, 7);
+
+        // Assuming camera has 5 parameters (1 for theta, 4 for quaternion)
+        // problem.AddParameterBlock(extrinsics, 5, camera_manifold);
+        problem.AddParameterBlock(extrinsics, 5);
+
+        // Add the residual block to the problem
+        problem.AddResidualBlock(cost_function, nullptr /* squared loss */, extrinsics, intrinsics, point, geometry);
+    }
+
+    ceres::Solver::Options options;
+    options.linear_solver_type = ceres::DENSE_SCHUR;
+    options.minimizer_progress_to_stdout = true;
+
+    ceres::Solver::Summary summary;
+    ceres::Solve(options, &problem, &summary);
+    std::cout << summary.FullReport() << "\n";
+
+    SaveRingProblem(ring_problem, "ring_adjusted_test.txt");
+}
+
 int main(int argc, char** argv) {
-    google::InitGoogleLogging(argv[0]);
-    if (argc != 2) {
-        std::cerr << "usage: simple_bundle_adjuster <bal_problem>\n";
+    if (argc < 3) {
+        std::cerr << "Usage: bundle_adjuster <bal_problem_file> <geometry_type> [<geometry_params_file>]\n";
         return 1;
     }
 
-    bool useQuaternionSystem = true; // Set this to false to use the old system.
+    std::string filename = argv[1];
+    std::string geometryType = argv[2];
 
-    if (useQuaternionSystem) {
-        SolveWithQuaternion(argv[1]);
+    if (geometryType == "quat") {
+        if (argc != 3) {
+            std::cerr << "Usage for 'quat': bundle_adjuster <bal_problem_file> quat\n";
+            return 1;
+        }
+        SolveWithQuaternion(filename.c_str());
+    } else if (geometryType == "angle") {
+        if (argc != 3) {
+            std::cerr << "Usage for 'angle': bundle_adjuster <bal_problem_file> angle\n";
+            return 1;
+        }
+        SolveWithAngleAxis(filename.c_str());
+    } else if (geometryType == "ring") {
+        if (argc != 4) {
+            std::cerr << "Usage for 'ring': bundle_adjuster <bal_problem_file> ring <geometry_params_file>\n";
+            return 1;
+        }
+        std::string ring_params_file = argv[3];
+        SolveWithRing(filename.c_str(), ring_params_file.c_str());
     } else {
-        SolveWithAngleAxis(argv[1]);
+        std::cerr << "Invalid geometry type: " << geometryType << "\n";
+        return 1;
     }
 
     return 0;
