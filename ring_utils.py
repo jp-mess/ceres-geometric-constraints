@@ -2,6 +2,49 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+def add_noise_to_ring(file_path, std_dev):
+    import os
+    # Read the ring parameters
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    # Parse the parameters
+    ring_params = {}
+    for line in lines:
+        if ':' not in line or 'type' in line:  # Skip non-parametric lines
+            continue
+        key, value = line.split(':', 1)
+        values = value.strip().split(',')
+        if 'radius' in key:
+            ring_params[key.strip()] = float(values[0])  # radius is a single float
+        else:
+            ring_params[key.strip()] = np.array([float(x.strip()) for x in values])
+
+    # Add Gaussian noise
+    for key in ['center', 'normal']:
+        ring_params[key] += np.random.normal(0, std_dev, ring_params[key].shape)
+    ring_params['radius'] += np.random.normal(0, std_dev)
+
+    # Normalize the normal vector after adding noise
+    ring_params['normal'] /= np.linalg.norm(ring_params['normal'])
+
+    # Create the output filename
+    file_name, file_ext = os.path.splitext(file_path)
+    output_file = f"{file_name}_noised{file_ext}"
+
+    # Save the modified parameters
+    with open(output_file, 'w') as file:
+        file.write("type: ring\n")  # Write the type at the beginning of the file
+        for key, value in ring_params.items():
+            if key in ['center', 'normal']:
+                line = f"{key}: {','.join(map(str, value))}\n"
+            else:  # radius
+                line = f"{key}: {value}\n"
+            file.write(line)
+
+    print(f"Noised parameters saved to {output_file}")
+
+
 def convert_strings_to_float_array(strings):
     float_array = []
     for string in strings:

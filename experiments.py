@@ -1,5 +1,5 @@
 
-def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_dir=None, visualize_frustums=False):
+def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_dir=None, visualize_frustums=True):
   import geometry_utils
   import image_utils
   import general_utils
@@ -22,8 +22,10 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
 
   # bundle adjustment noise parameters
   pix_noise = 0.0
-  pos_noise = 0.0
+  pos_noise = 1.0
   rot_noise = 0.0
+
+  ring_noise = 0.5
 
 
   # to find the center of the pcd, use CloudCompare or something
@@ -49,25 +51,24 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
   correspondences = image_utils.rasterize(cameras=cameras,indices_to_project=indices,
                                                           points=np.array(pcd.points),
                                                           colors=pcd.colors)
-  
+ 
+  # saves the simulated cameras and world points for bundle adjustment (you probably want this) 
   ba_encoding_file = "problem_encodings/ba_problem_input.txt"
   geometry_utils.create_bal_problem_file(correspondences, n_cameras, np.array(pcd.points), cameras, ba_encoding_file,
                                          pixel_noise_scale=pix_noise, translation_noise_scale=pos_noise, rotation_noise_scale=rot_noise)
   
   import ring_utils 
+  # projects the cameras onto an existing ring, for testing purposes (if you need an exactly correct ring problem)
   ring_encoding_file = "problem_encodings/ring_problem_input.txt"
   ring_utils.update_bal_problem_with_ring_cameras(ring_params_file, ba_encoding_file, ring_encoding_file)
-  print("residuals before ring projection")
-  ring_utils.print_camera_residuals_from_file(ring_params_file, ba_encoding_file)
-  print("and after")
-  ring_utils.print_camera_residuals_from_file(ring_params_file, ring_encoding_file)
-  
-  geometry_utils.invert_camera_pose(ba_encoding_file, "problem_encodings/inverted_ba_problem.txt")
-  geometry_utils.invert_camera_pose(ring_encoding_file, "problem_encodings/inverted_ring_problem.txt")
 
+  # saves a noisy version of the ring parameters, for simulation testing 
+  ring_utils.add_noise_to_ring(ring_params_file, ring_noise)
+ 
   if visualize_frustums: 
     import frustum_visualizer
-    visualizer = frustum_visualizer.PointCloudCameraVisualizer(pcd, cameras, center)
+    ring_params = ring_utils.load_ring_params(ring_params_file)
+    visualizer = frustum_visualizer.PointCloudCameraVisualizer(pcd, cameras, center,ring_dict=ring_params)
     visualizer.visualize()
 
 

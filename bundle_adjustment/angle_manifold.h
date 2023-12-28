@@ -39,6 +39,7 @@
 // Defines a manifold for updating the angle to be constrained in [-pi to pi).
 class AngleManifold {
  public:
+
   template <typename T>
   bool Plus(const T* x_radians,
             const T* delta_radians,

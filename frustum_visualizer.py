@@ -2,10 +2,65 @@ import open3d as o3d
 import numpy as np
 
 class PointCloudCameraVisualizer:
-    def __init__(self, pcd, cameras, center_point):
+    def __init__(self, pcd, cameras, center_point, ring_dict=None):
         self.pcd = pcd
         self.cameras = cameras
         self.center_point = center_point
+        self.ring_dict = ring_dict
+
+    def create_plane(self, center, normal, size=1.0, thickness=0.01, color=[0.53, 0.81, 0.92]):
+        box = o3d.geometry.TriangleMesh.create_box(width=size, height=thickness, depth=size)
+        # Align box with the normal vector
+        rotation_matrix = self._align_vector_to_another(np.array([0, 1, 0]), normal)
+        box.rotate(rotation_matrix, center=False)
+        box.translate(center - np.array([0, thickness / 2, 0]))
+        box.paint_uniform_color(color)  # Set color
+        return box
+
+
+    def create_ring(self, center, normal, outer_radius, thickness=0.05, color=[0.49, 0.98, 1.0]):
+        """
+        Create a ring by modifying a torus. Outer radius is the radius of the ring,
+        and thickness is the radius of the torus tube.
+        """
+        # Ensure outer_radius is a float, not an array
+        outer_radius = float(outer_radius) 
+
+        torus = o3d.geometry.TriangleMesh.create_torus(torus_radius=outer_radius, tube_radius=thickness, radial_resolution=30, tubular_resolution=20)
+        # Align torus with the normal vector
+        rotation_matrix = self._align_vector_to_another(np.array([0, 0, 1]), normal)
+        torus.rotate(rotation_matrix)
+        torus.translate(center)
+        torus.paint_uniform_color(color)  # Set color
+        return torus
+
+
+    def _align_vector_to_another(self, v1, v2):
+      """
+      Compute the rotation matrix that aligns v1 to v2
+      """
+      v = np.cross(v1, v2)
+      c = np.dot(v1, v2)
+      s = np.linalg.norm(v)
+
+      if s < 1e-10:  # Threshold to check if vectors are parallel
+          # If vectors are nearly parallel, no rotation is needed
+          return np.eye(3) if c > 0 else -np.eye(3)  # Handle opposite direction case
+
+      kmat = np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
+      rotation_matrix = np.eye(3) + kmat + kmat.dot(kmat) * ((1 - c) / (s ** 2))
+      return rotation_matrix
+
+
+    def create_parametrized_ring(self, ring_params, color=[0.49, 0.98, 1.0]):
+        center = np.array(ring_params['center'])
+        normal = np.array(ring_params['normal'])
+        radius = ring_params['radius']
+        ring = self.create_ring(center, normal, radius)
+        ring.paint_uniform_color(color)
+        return ring
+
+
 
     def create_camera_marker(self, location, size=0.05):
         return o3d.geometry.TriangleMesh.create_sphere(radius=size).translate(location)
@@ -60,6 +115,11 @@ class PointCloudCameraVisualizer:
             frustum = self.create_frustum(camera['extrinsic'])
             visual_elements.extend([camera_marker, line, frustum])
 
+        # Add the ring if ring_dict is provided
+        if self.ring_dict:
+            ring = self.create_parametrized_ring(self.ring_dict)
+            visual_elements.append(ring)
+
         vis = o3d.visualization.Visualizer()
         vis.create_window()
         for element in visual_elements:
@@ -69,4 +129,3 @@ class PointCloudCameraVisualizer:
         opt.background_color = np.asarray([0.1, 0.1, 0.1])  # Charcoal grey background
         vis.run()
         vis.destroy_window()
-

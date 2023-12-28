@@ -44,6 +44,7 @@
 #include "ceres/rotation.h"
 #include "ceres/manifold.h"
 #include "ceres/product_manifold.h"
+#include "ceres/autodiff_manifold.h"
 
 #include "BALProblem.h"
 #include "SimpleCost.h"
@@ -295,10 +296,8 @@ void SolveWithRing(const char* filename, const char* ring_params_filename) {
         double* point = ring_problem.mutable_point_for_observation(i);
         double* geometry = ring_problem.mutable_geometry_params();
 
-        // ceres::Manifold* angle_manifold = AngleManifold::Create();
-
         // Use a product manifold of AngleManifold (for theta) and QuaternionManifold (for the quaternion)
-        // ceres::Manifold* camera_manifold = new ceres::ProductManifold<AngleManifold, ceres::QuaternionManifold>{};
+        ceres::Manifold* camera_manifold = new ceres::ProductManifold<ceres::AutoDiffManifold<AngleManifold, 1, 1>, ceres::QuaternionManifold>{};
 
         problem.AddParameterBlock(intrinsics, 3);
         problem.SetParameterBlockConstant(intrinsics);
