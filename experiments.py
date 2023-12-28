@@ -63,11 +63,13 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
   ring_utils.update_bal_problem_with_ring_cameras(ring_params_file, ba_encoding_file, ring_encoding_file)
 
   # saves a noisy version of the ring parameters, for simulation testing 
-  ring_utils.add_noise_to_ring(ring_params_file, ring_noise)
+  file_name, file_ext = os.path.splitext(ring_params_file)
+  noisy_ring_params_file = f"{file_name}_noised{file_ext}"
+  ring_utils.add_noise_to_ring(ring_params_file, ring_noise, noisy_ring_params_file)
  
   if visualize_frustums: 
     import frustum_visualizer
-    ring_params = ring_utils.load_ring_params(ring_params_file)
+    ring_params = ring_utils.load_ring_params(noisy_ring_params_file)
     visualizer = frustum_visualizer.PointCloudCameraVisualizer(pcd, cameras, center,ring_dict=ring_params)
     visualizer.visualize()
 

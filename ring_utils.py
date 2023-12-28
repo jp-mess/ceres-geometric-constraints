@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-def add_noise_to_ring(file_path, std_dev):
+def add_noise_to_ring(file_path, std_dev, output_file):
     import os
     # Read the ring parameters
     with open(file_path, 'r') as file:
@@ -27,10 +27,6 @@ def add_noise_to_ring(file_path, std_dev):
 
     # Normalize the normal vector after adding noise
     ring_params['normal'] /= np.linalg.norm(ring_params['normal'])
-
-    # Create the output filename
-    file_name, file_ext = os.path.splitext(file_path)
-    output_file = f"{file_name}_noised{file_ext}"
 
     # Save the modified parameters
     with open(output_file, 'w') as file:
