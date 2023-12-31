@@ -7,7 +7,7 @@ import open3d as o3d
 import matplotlib.pyplot as plt
 import experiments
 
-# np.random.seed(0)
+np.random.seed(105)
 
 if __name__ == "__main__":
   # where to store and generate data (ideally not in the WSL) 
@@ -17,7 +17,7 @@ if __name__ == "__main__":
   output_cloud_dir = os.path.join(root_dir,'output_clouds')
 
   #experiments.bmw_retriangulation_experiment(root_dir, input_cloud=input_cloud, output_cloud_dir=output_cloud_dir)
-  experiments.bmw_bundle_adjustment_experiment(root_dir, input_cloud=input_cloud, output_cloud_dir=output_cloud_dir)
+  experiments.bmw_ring_experiment(root_dir, input_cloud=input_cloud, output_cloud_dir=output_cloud_dir)
 
   
 

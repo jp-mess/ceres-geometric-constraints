@@ -1,5 +1,5 @@
 
-def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_dir=None, visualize_frustums=True):
+def bmw_ring_experiment(root_dir, input_cloud=None, output_cloud_dir=None, visualize_frustums=True):
   import geometry_utils
   import image_utils
   import general_utils
@@ -25,7 +25,7 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
   pos_noise = 1.0
   rot_noise = 0.0
 
-  ring_noise = 0.0
+  ring_noise = 1.0
 
 
   # to find the center of the pcd, use CloudCompare or something
