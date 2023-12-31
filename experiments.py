@@ -37,7 +37,7 @@ def bmw_ring_experiment(root_dir, input_cloud=None, output_cloud_dir=None, visua
   up_direction = "y"
   cameras = list()
 
-  ring_params_file = "geometry_encodings/ring_params.txt"
+  ring_params_file = "geometry_encodings/ring_params_true.txt"
   cameras = geometry_utils.make_cameras_on_ring(center, camera_radius, up_direction, n_cameras, ring_params_file=ring_params_file)
   cameras = [general_utils.package_camera(camera, camera_parameters, 'camera_' + str(i)) for i, camera in enumerate(cameras)]
  
@@ -53,18 +53,18 @@ def bmw_ring_experiment(root_dir, input_cloud=None, output_cloud_dir=None, visua
                                                           colors=pcd.colors)
  
   # saves the simulated cameras and world points for bundle adjustment (you probably want this) 
-  ba_encoding_file = "problem_encodings/ba_problem_input.txt"
+  ba_encoding_file = "problem_encodings/ring_problem_input.txt"
   geometry_utils.create_bal_problem_file(correspondences, n_cameras, np.array(pcd.points), cameras, ba_encoding_file,
                                          pixel_noise_scale=pix_noise, translation_noise_scale=pos_noise, rotation_noise_scale=rot_noise)
   
   import ring_utils 
   # projects the cameras onto an existing ring, for testing purposes (if you need an exactly correct ring problem)
-  ring_encoding_file = "problem_encodings/ring_problem_input.txt"
-  ring_utils.update_bal_problem_with_ring_cameras(ring_params_file, ba_encoding_file, ring_encoding_file)
+  # ring_encoding_file = "problem_encodings/debug_ring_projections.txt"
+  # ring_utils.update_bal_problem_with_ring_cameras(ring_params_file, ba_encoding_file, ring_encoding_file)
 
   # saves a noisy version of the ring parameters, for simulation testing 
   file_name, file_ext = os.path.splitext(ring_params_file)
-  noisy_ring_params_file = f"{file_name}_noised{file_ext}"
+  noisy_ring_params_file = "geometry_encodings/ring_params_noised.txt"
   ring_utils.add_noise_to_ring(ring_params_file, ring_noise, noisy_ring_params_file)
  
   if visualize_frustums: 
