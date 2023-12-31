@@ -28,7 +28,7 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
       
       The C compiler identification is GNU, found in:
-        /home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/3.27.6/CompilerIdC/a.out
+        /home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/3.27.6/CompilerIdC/a.out
       
   -
     kind: "message-v1"
@@ -50,7 +50,7 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
       
       The CXX compiler identification is GNU, found in:
-        /home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/3.27.6/CompilerIdCXX/a.out
+        /home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/3.27.6/CompilerIdCXX/a.out
       
   -
     kind: "try_compile-v1"
@@ -61,21 +61,21 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-fdF0LI"
-      binary: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-fdF0LI"
+      source: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-EqzilO"
+      binary: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-EqzilO"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
     buildResult:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-fdF0LI'
+        Change Dir: '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-EqzilO'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_dcf2b/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_dcf2b.dir/build.make CMakeFiles/cmTC_dcf2b.dir/build
-        make[1]: Entering directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-fdF0LI'
-        Building C object CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o
-        /usr/bin/cc   -v -o CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.27/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_197fd/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_197fd.dir/build.make CMakeFiles/cmTC_197fd.dir/build
+        make[1]: Entering directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-EqzilO'
+        Building C object CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -v -o CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.27/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         OFFLOAD_TARGET_NAMES=nvptx-none:hsa
@@ -84,8 +84,8 @@ events:
         Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++,gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr,hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
         Thread model: posix
         gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
-         /usr/lib/gcc/x86_64-linux-gnu/9/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.27/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccCK7r0P.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+         /usr/lib/gcc/x86_64-linux-gnu/9/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.27/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccvsvOSb.s
         GNU C17 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)
         	compiled by GNU C version 9.4.0, GMP version 6.2.0, MPFR version 4.0.2, MPC version 1.1.0, isl version isl-0.22.1-GMP
         
@@ -109,15 +109,15 @@ events:
         warning: MPFR header version 4.0.2 differs from library version 4.2.1.
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 01da938ff5dc2163489aa33cb3b747a7
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
-         as -v --64 -o CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o /tmp/ccCK7r0P.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+         as -v --64 -o CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o /tmp/ccvsvOSb.s
         GNU assembler version 2.34 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.34
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
-        Linking C executable cmTC_dcf2b
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dcf2b.dir/link.txt --verbose=1
-        /usr/bin/cc  -v -rdynamic CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o -o cmTC_dcf2b 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+        Linking C executable cmTC_197fd
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_197fd.dir/link.txt --verbose=1
+        /usr/bin/cc  -v -rdynamic CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o -o cmTC_197fd 
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper
@@ -129,10 +129,10 @@ events:
         gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_dcf2b' '-mtune=generic' '-march=x86-64'
-         /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/cc1JlGFh.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_dcf2b /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
-        COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_dcf2b' '-mtune=generic' '-march=x86-64'
-        make[1]: Leaving directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-fdF0LI'
+        COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_197fd' '-mtune=generic' '-march=x86-64'
+         /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccD6UEaD.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_197fd /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_197fd' '-mtune=generic' '-march=x86-64'
+        make[1]: Leaving directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-EqzilO'
         
       exitCode: 0
   -
@@ -166,13 +166,13 @@ events:
     message: |
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-fdF0LI']
+        ignore line: [Change Dir: '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-EqzilO']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_dcf2b/fast]
-        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_dcf2b.dir/build.make CMakeFiles/cmTC_dcf2b.dir/build]
-        ignore line: [make[1]: Entering directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-fdF0LI']
-        ignore line: [Building C object CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o]
-        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.27/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_197fd/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_197fd.dir/build.make CMakeFiles/cmTC_197fd.dir/build]
+        ignore line: [make[1]: Entering directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-EqzilO']
+        ignore line: [Building C object CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.27/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:hsa]
@@ -181,8 +181,8 @@ events:
         ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c ada c++ go brig d fortran objc obj-c++ gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu]
         ignore line: [Thread model: posix]
         ignore line: [gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/9/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.27/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccCK7r0P.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/9/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.27/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccvsvOSb.s]
         ignore line: [GNU C17 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 9.4.0  GMP version 6.2.0  MPFR version 4.0.2  MPC version 1.1.0  isl version isl-0.22.1-GMP]
         ignore line: []
@@ -206,15 +206,15 @@ events:
         ignore line: [warning: MPFR header version 4.0.2 differs from library version 4.2.1.]
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 01da938ff5dc2163489aa33cb3b747a7]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o /tmp/ccCK7r0P.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o /tmp/ccvsvOSb.s]
         ignore line: [GNU assembler version 2.34 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.34]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
-        ignore line: [Linking C executable cmTC_dcf2b]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dcf2b.dir/link.txt --verbose=1]
-        ignore line: [/usr/bin/cc  -v -rdynamic CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o -o cmTC_dcf2b ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+        ignore line: [Linking C executable cmTC_197fd]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_197fd.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/cc  -v -rdynamic CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o -o cmTC_197fd ]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper]
@@ -226,13 +226,13 @@ events:
         ignore line: [gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_dcf2b' '-mtune=generic' '-march=x86-64']
-        link line: [ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/cc1JlGFh.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_dcf2b /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_197fd' '-mtune=generic' '-march=x86-64']
+        link line: [ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccD6UEaD.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_197fd /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cc1JlGFh.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccD6UEaD.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -251,7 +251,7 @@ events:
           arg [-znow] ==> ignore
           arg [-zrelro] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_dcf2b] ==> ignore
+          arg [cmTC_197fd] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o]
@@ -263,7 +263,7 @@ events:
           arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/9/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../..]
-          arg [CMakeFiles/cmTC_dcf2b.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_197fd.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--push-state] ==> ignore
           arg [--as-needed] ==> ignore
@@ -303,21 +303,21 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-Nxt25I"
-      binary: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-Nxt25I"
+      source: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-uHrDKO"
+      binary: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-uHrDKO"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
     buildResult:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-Nxt25I'
+        Change Dir: '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-uHrDKO'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6fb19/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_6fb19.dir/build.make CMakeFiles/cmTC_6fb19.dir/build
-        make[1]: Entering directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-Nxt25I'
-        Building CXX object CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/c++   -v -o CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6f30d/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_6f30d.dir/build.make CMakeFiles/cmTC_6f30d.dir/build
+        make[1]: Entering directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-uHrDKO'
+        Building CXX object CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -v -o CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         OFFLOAD_TARGET_NAMES=nvptx-none:hsa
@@ -326,8 +326,8 @@ events:
         Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++,gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr,hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
         Thread model: posix
         gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-         /usr/lib/gcc/x86_64-linux-gnu/9/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccErL2Xp.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+         /usr/lib/gcc/x86_64-linux-gnu/9/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cc0rbQpI.s
         GNU C++14 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)
         	compiled by GNU C version 9.4.0, GMP version 6.2.0, MPFR version 4.0.2, MPC version 1.1.0, isl version isl-0.22.1-GMP
         
@@ -355,15 +355,15 @@ events:
         warning: MPFR header version 4.0.2 differs from library version 4.2.1.
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 3d1eba838554fa2348dba760e4770469
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-         as -v --64 -o CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccErL2Xp.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+         as -v --64 -o CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc0rbQpI.s
         GNU assembler version 2.34 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.34
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-        Linking CXX executable cmTC_6fb19
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6fb19.dir/link.txt --verbose=1
-        /usr/bin/c++  -v -rdynamic CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_6fb19 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+        Linking CXX executable cmTC_6f30d
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6f30d.dir/link.txt --verbose=1
+        /usr/bin/c++  -v -rdynamic CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_6f30d 
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper
@@ -375,10 +375,10 @@ events:
         gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_6fb19' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-         /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccYlGSoS.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_6fb19 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
-        COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_6fb19' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-        make[1]: Leaving directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-Nxt25I'
+        COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_6f30d' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+         /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccULDjlb.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_6f30d /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_6f30d' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+        make[1]: Leaving directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-uHrDKO'
         
       exitCode: 0
   -
@@ -418,13 +418,13 @@ events:
     message: |
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-Nxt25I']
+        ignore line: [Change Dir: '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-uHrDKO']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6fb19/fast]
-        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_6fb19.dir/build.make CMakeFiles/cmTC_6fb19.dir/build]
-        ignore line: [make[1]: Entering directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-Nxt25I']
-        ignore line: [Building CXX object CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6f30d/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_6f30d.dir/build.make CMakeFiles/cmTC_6f30d.dir/build]
+        ignore line: [make[1]: Entering directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-uHrDKO']
+        ignore line: [Building CXX object CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:hsa]
@@ -433,8 +433,8 @@ events:
         ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.2' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c ada c++ go brig d fortran objc obj-c++ gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-9QDOt0/gcc-9-9.4.0/debian/tmp-nvptx/usr hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu]
         ignore line: [Thread model: posix]
         ignore line: [gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/9/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccErL2Xp.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/9/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cc0rbQpI.s]
         ignore line: [GNU C++14 (Ubuntu 9.4.0-1ubuntu1~20.04.2) version 9.4.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 9.4.0  GMP version 6.2.0  MPFR version 4.0.2  MPC version 1.1.0  isl version isl-0.22.1-GMP]
         ignore line: []
@@ -462,15 +462,15 @@ events:
         ignore line: [warning: MPFR header version 4.0.2 differs from library version 4.2.1.]
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 3d1eba838554fa2348dba760e4770469]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccErL2Xp.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc0rbQpI.s]
         ignore line: [GNU assembler version 2.34 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.34]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-        ignore line: [Linking CXX executable cmTC_6fb19]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6fb19.dir/link.txt --verbose=1]
-        ignore line: [/usr/bin/c++  -v -rdynamic CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_6fb19 ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+        ignore line: [Linking CXX executable cmTC_6f30d]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6f30d.dir/link.txt --verbose=1]
+        ignore line: [/usr/bin/c++  -v -rdynamic CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_6f30d ]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper]
@@ -482,13 +482,13 @@ events:
         ignore line: [gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_6fb19' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-        link line: [ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccYlGSoS.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_6fb19 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_6f30d' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+        link line: [ /usr/lib/gcc/x86_64-linux-gnu/9/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper -plugin-opt=-fresolution=/tmp/ccULDjlb.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_6f30d /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/9 -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/9/../../.. CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccYlGSoS.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccULDjlb.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -507,7 +507,7 @@ events:
           arg [-znow] ==> ignore
           arg [-zrelro] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_6fb19] ==> ignore
+          arg [cmTC_6f30d] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/9/crtbeginS.o]
@@ -519,7 +519,7 @@ events:
           arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/9/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/9/../../..]
-          arg [CMakeFiles/cmTC_6fb19.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_6f30d.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -557,8 +557,8 @@ events:
       - "/usr/local/lib/cmake/Ceres/CeresConfig.cmake:181 (find_dependency)"
       - "CMakeLists.txt:5 (find_package)"
     directories:
-      source: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-XaBxYF"
-      binary: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-XaBxYF"
+      source: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-FKdUTN"
+      binary: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-FKdUTN"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_MODULE_PATH: "/usr/local/lib/cmake/Ceres"
@@ -566,22 +566,22 @@ events:
       variable: "BLAS_WORKS"
       cached: true
       stdout: |
-        Change Dir: '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-XaBxYF'
+        Change Dir: '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-FKdUTN'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d52b8/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_d52b8.dir/build.make CMakeFiles/cmTC_d52b8.dir/build
-        make[1]: Entering directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-XaBxYF'
-        Building C object CMakeFiles/cmTC_d52b8.dir/CheckFunctionExists.c.o
-        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=sgemm_ -o CMakeFiles/cmTC_d52b8.dir/CheckFunctionExists.c.o -c /home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-XaBxYF/CheckFunctionExists.c
-        Linking C executable cmTC_d52b8
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d52b8.dir/link.txt --verbose=1
-        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=sgemm_ -rdynamic CMakeFiles/cmTC_d52b8.dir/CheckFunctionExists.c.o -o cmTC_d52b8 
-        /usr/bin/ld: CMakeFiles/cmTC_d52b8.dir/CheckFunctionExists.c.o: in function `main':
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d0df9/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_d0df9.dir/build.make CMakeFiles/cmTC_d0df9.dir/build
+        make[1]: Entering directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-FKdUTN'
+        Building C object CMakeFiles/cmTC_d0df9.dir/CheckFunctionExists.c.o
+        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=sgemm_ -o CMakeFiles/cmTC_d0df9.dir/CheckFunctionExists.c.o -c /home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-FKdUTN/CheckFunctionExists.c
+        Linking C executable cmTC_d0df9
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d0df9.dir/link.txt --verbose=1
+        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=sgemm_ -rdynamic CMakeFiles/cmTC_d0df9.dir/CheckFunctionExists.c.o -o cmTC_d0df9 
+        /usr/bin/ld: CMakeFiles/cmTC_d0df9.dir/CheckFunctionExists.c.o: in function `main':
         CheckFunctionExists.c:(.text+0x14): undefined reference to `sgemm_'
         collect2: error: ld returned 1 exit status
-        make[1]: *** [CMakeFiles/cmTC_d52b8.dir/build.make:99: cmTC_d52b8] Error 1
-        make[1]: Leaving directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-XaBxYF'
-        make: *** [Makefile:127: cmTC_d52b8/fast] Error 2
+        make[1]: *** [CMakeFiles/cmTC_d0df9.dir/build.make:99: cmTC_d0df9] Error 1
+        make[1]: Leaving directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-FKdUTN'
+        make: *** [Makefile:127: cmTC_d0df9/fast] Error 2
         
       exitCode: 2
   -
@@ -599,8 +599,8 @@ events:
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-dCoiTI"
-      binary: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-dCoiTI"
+      source: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-9B9gnO"
+      binary: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-9B9gnO"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_MODULE_PATH: "/usr/local/lib/cmake/Ceres"
@@ -608,25 +608,25 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-dCoiTI'
+        Change Dir: '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-9B9gnO'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_5a148/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_5a148.dir/build.make CMakeFiles/cmTC_5a148.dir/build
-        make[1]: Entering directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-dCoiTI'
-        Building C object CMakeFiles/cmTC_5a148.dir/src.c.o
-        /usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_5a148.dir/src.c.o -c /home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-dCoiTI/src.c
-        Linking C executable cmTC_5a148
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5a148.dir/link.txt --verbose=1
-        /usr/bin/cc -rdynamic CMakeFiles/cmTC_5a148.dir/src.c.o -o cmTC_5a148 
-        /usr/bin/ld: CMakeFiles/cmTC_5a148.dir/src.c.o: in function `main':
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_7928f/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_7928f.dir/build.make CMakeFiles/cmTC_7928f.dir/build
+        make[1]: Entering directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-9B9gnO'
+        Building C object CMakeFiles/cmTC_7928f.dir/src.c.o
+        /usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_7928f.dir/src.c.o -c /home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-9B9gnO/src.c
+        Linking C executable cmTC_7928f
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7928f.dir/link.txt --verbose=1
+        /usr/bin/cc -rdynamic CMakeFiles/cmTC_7928f.dir/src.c.o -o cmTC_7928f 
+        /usr/bin/ld: CMakeFiles/cmTC_7928f.dir/src.c.o: in function `main':
         src.c:(.text+0x46): undefined reference to `pthread_create'
         /usr/bin/ld: src.c:(.text+0x52): undefined reference to `pthread_detach'
         /usr/bin/ld: src.c:(.text+0x5e): undefined reference to `pthread_cancel'
         /usr/bin/ld: src.c:(.text+0x6f): undefined reference to `pthread_join'
         collect2: error: ld returned 1 exit status
-        make[1]: *** [CMakeFiles/cmTC_5a148.dir/build.make:99: cmTC_5a148] Error 1
-        make[1]: Leaving directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-dCoiTI'
-        make: *** [Makefile:127: cmTC_5a148/fast] Error 2
+        make[1]: *** [CMakeFiles/cmTC_7928f.dir/build.make:99: cmTC_7928f] Error 1
+        make[1]: Leaving directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-9B9gnO'
+        make: *** [Makefile:127: cmTC_7928f/fast] Error 2
         
       exitCode: 2
   -
@@ -643,8 +643,8 @@ events:
     checks:
       - "Looking for pthread_create in pthreads"
     directories:
-      source: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-EDL33F"
-      binary: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-EDL33F"
+      source: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-jLl4yP"
+      binary: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-jLl4yP"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_MODULE_PATH: "/usr/local/lib/cmake/Ceres"
@@ -652,21 +652,21 @@ events:
       variable: "CMAKE_HAVE_PTHREADS_CREATE"
       cached: true
       stdout: |
-        Change Dir: '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-EDL33F'
+        Change Dir: '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-jLl4yP'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_396b0/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_396b0.dir/build.make CMakeFiles/cmTC_396b0.dir/build
-        make[1]: Entering directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-EDL33F'
-        Building C object CMakeFiles/cmTC_396b0.dir/CheckFunctionExists.c.o
-        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create -o CMakeFiles/cmTC_396b0.dir/CheckFunctionExists.c.o -c /home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-EDL33F/CheckFunctionExists.c
-        Linking C executable cmTC_396b0
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_396b0.dir/link.txt --verbose=1
-        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create -rdynamic CMakeFiles/cmTC_396b0.dir/CheckFunctionExists.c.o -o cmTC_396b0  -lpthreads 
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_47eb2/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_47eb2.dir/build.make CMakeFiles/cmTC_47eb2.dir/build
+        make[1]: Entering directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-jLl4yP'
+        Building C object CMakeFiles/cmTC_47eb2.dir/CheckFunctionExists.c.o
+        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create -o CMakeFiles/cmTC_47eb2.dir/CheckFunctionExists.c.o -c /home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-jLl4yP/CheckFunctionExists.c
+        Linking C executable cmTC_47eb2
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_47eb2.dir/link.txt --verbose=1
+        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create -rdynamic CMakeFiles/cmTC_47eb2.dir/CheckFunctionExists.c.o -o cmTC_47eb2  -lpthreads 
         /usr/bin/ld: cannot find -lpthreads
         collect2: error: ld returned 1 exit status
-        make[1]: *** [CMakeFiles/cmTC_396b0.dir/build.make:99: cmTC_396b0] Error 1
-        make[1]: Leaving directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-EDL33F'
-        make: *** [Makefile:127: cmTC_396b0/fast] Error 2
+        make[1]: *** [CMakeFiles/cmTC_47eb2.dir/build.make:99: cmTC_47eb2] Error 1
+        make[1]: Leaving directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-jLl4yP'
+        make: *** [Makefile:127: cmTC_47eb2/fast] Error 2
         
       exitCode: 2
   -
@@ -683,8 +683,8 @@ events:
     checks:
       - "Looking for pthread_create in pthread"
     directories:
-      source: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-fEEHdG"
-      binary: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-fEEHdG"
+      source: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-i2VqaM"
+      binary: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-i2VqaM"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_MODULE_PATH: "/usr/local/lib/cmake/Ceres"
@@ -692,17 +692,17 @@ events:
       variable: "CMAKE_HAVE_PTHREAD_CREATE"
       cached: true
       stdout: |
-        Change Dir: '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-fEEHdG'
+        Change Dir: '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-i2VqaM'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_2d6aa/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_2d6aa.dir/build.make CMakeFiles/cmTC_2d6aa.dir/build
-        make[1]: Entering directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-fEEHdG'
-        Building C object CMakeFiles/cmTC_2d6aa.dir/CheckFunctionExists.c.o
-        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create -o CMakeFiles/cmTC_2d6aa.dir/CheckFunctionExists.c.o -c /home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-fEEHdG/CheckFunctionExists.c
-        Linking C executable cmTC_2d6aa
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2d6aa.dir/link.txt --verbose=1
-        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create -rdynamic CMakeFiles/cmTC_2d6aa.dir/CheckFunctionExists.c.o -o cmTC_2d6aa  -lpthread 
-        make[1]: Leaving directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-fEEHdG'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_063e7/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_063e7.dir/build.make CMakeFiles/cmTC_063e7.dir/build
+        make[1]: Entering directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-i2VqaM'
+        Building C object CMakeFiles/cmTC_063e7.dir/CheckFunctionExists.c.o
+        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create -o CMakeFiles/cmTC_063e7.dir/CheckFunctionExists.c.o -c /home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-i2VqaM/CheckFunctionExists.c
+        Linking C executable cmTC_063e7
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_063e7.dir/link.txt --verbose=1
+        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create -rdynamic CMakeFiles/cmTC_063e7.dir/CheckFunctionExists.c.o -o cmTC_063e7  -lpthread 
+        make[1]: Leaving directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-i2VqaM'
         
       exitCode: 0
   -
@@ -716,8 +716,8 @@ events:
       - "/usr/local/lib/cmake/Ceres/CeresConfig.cmake:181 (find_dependency)"
       - "CMakeLists.txt:5 (find_package)"
     directories:
-      source: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-WA6dcH"
-      binary: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-WA6dcH"
+      source: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-3lwyWO"
+      binary: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-3lwyWO"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_MODULE_PATH: "/usr/local/lib/cmake/Ceres"
@@ -725,17 +725,17 @@ events:
       variable: "BLAS_openblas_WORKS"
       cached: true
       stdout: |
-        Change Dir: '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-WA6dcH'
+        Change Dir: '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-3lwyWO'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d0e83/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_d0e83.dir/build.make CMakeFiles/cmTC_d0e83.dir/build
-        make[1]: Entering directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-WA6dcH'
-        Building C object CMakeFiles/cmTC_d0e83.dir/CheckFunctionExists.c.o
-        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=sgemm_ -o CMakeFiles/cmTC_d0e83.dir/CheckFunctionExists.c.o -c /home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-WA6dcH/CheckFunctionExists.c
-        Linking C executable cmTC_d0e83
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d0e83.dir/link.txt --verbose=1
-        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=sgemm_ -rdynamic CMakeFiles/cmTC_d0e83.dir/CheckFunctionExists.c.o -o cmTC_d0e83  -Wl,-rpath,/usr/local/lib /usr/local/lib/libopenblas.so 
-        make[1]: Leaving directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-WA6dcH'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_4044a/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_4044a.dir/build.make CMakeFiles/cmTC_4044a.dir/build
+        make[1]: Entering directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-3lwyWO'
+        Building C object CMakeFiles/cmTC_4044a.dir/CheckFunctionExists.c.o
+        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=sgemm_ -o CMakeFiles/cmTC_4044a.dir/CheckFunctionExists.c.o -c /home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-3lwyWO/CheckFunctionExists.c
+        Linking C executable cmTC_4044a
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4044a.dir/link.txt --verbose=1
+        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=sgemm_ -rdynamic CMakeFiles/cmTC_4044a.dir/CheckFunctionExists.c.o -o cmTC_4044a  -Wl,-rpath,/usr/local/lib /usr/local/lib/libopenblas.so 
+        make[1]: Leaving directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-3lwyWO'
         
       exitCode: 0
   -
@@ -749,8 +749,8 @@ events:
       - "/usr/local/lib/cmake/Ceres/CeresConfig.cmake:181 (find_dependency)"
       - "CMakeLists.txt:5 (find_package)"
     directories:
-      source: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-XKH7KJ"
-      binary: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-XKH7KJ"
+      source: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-1JFEMO"
+      binary: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-1JFEMO"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_MODULE_PATH: "/usr/local/lib/cmake/Ceres"
@@ -758,17 +758,17 @@ events:
       variable: "LAPACK_WORKS"
       cached: true
       stdout: |
-        Change Dir: '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-XKH7KJ'
+        Change Dir: '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-1JFEMO'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_ba5c4/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_ba5c4.dir/build.make CMakeFiles/cmTC_ba5c4.dir/build
-        make[1]: Entering directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-XKH7KJ'
-        Building C object CMakeFiles/cmTC_ba5c4.dir/CheckFunctionExists.c.o
-        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=cheev_ -o CMakeFiles/cmTC_ba5c4.dir/CheckFunctionExists.c.o -c /home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-XKH7KJ/CheckFunctionExists.c
-        Linking C executable cmTC_ba5c4
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ba5c4.dir/link.txt --verbose=1
-        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=cheev_ -rdynamic CMakeFiles/cmTC_ba5c4.dir/CheckFunctionExists.c.o -o cmTC_ba5c4  -Wl,-rpath,/usr/local/lib /usr/local/lib/libopenblas.so -lpthread -lm -ldl 
-        make[1]: Leaving directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-XKH7KJ'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_249dd/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_249dd.dir/build.make CMakeFiles/cmTC_249dd.dir/build
+        make[1]: Entering directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-1JFEMO'
+        Building C object CMakeFiles/cmTC_249dd.dir/CheckFunctionExists.c.o
+        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=cheev_ -o CMakeFiles/cmTC_249dd.dir/CheckFunctionExists.c.o -c /home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-1JFEMO/CheckFunctionExists.c
+        Linking C executable cmTC_249dd
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_249dd.dir/link.txt --verbose=1
+        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=cheev_ -rdynamic CMakeFiles/cmTC_249dd.dir/CheckFunctionExists.c.o -o cmTC_249dd  -Wl,-rpath,/usr/local/lib /usr/local/lib/libopenblas.so -lpthread -lm -ldl 
+        make[1]: Leaving directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-1JFEMO'
         
       exitCode: 0
   -
@@ -782,8 +782,8 @@ events:
     checks:
       - "Looking for shm_open in rt"
     directories:
-      source: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-VxaKzF"
-      binary: "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-VxaKzF"
+      source: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-gRAZAM"
+      binary: "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-gRAZAM"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_MODULE_PATH: "/usr/local/lib/cmake/Ceres"
@@ -791,17 +791,17 @@ events:
       variable: "HAVE_LIBRT"
       cached: true
       stdout: |
-        Change Dir: '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-VxaKzF'
+        Change Dir: '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-gRAZAM'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_2b1ab/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_2b1ab.dir/build.make CMakeFiles/cmTC_2b1ab.dir/build
-        make[1]: Entering directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-VxaKzF'
-        Building C object CMakeFiles/cmTC_2b1ab.dir/CheckFunctionExists.c.o
-        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=shm_open -o CMakeFiles/cmTC_2b1ab.dir/CheckFunctionExists.c.o -c /home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-VxaKzF/CheckFunctionExists.c
-        Linking C executable cmTC_2b1ab
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2b1ab.dir/link.txt --verbose=1
-        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=shm_open -rdynamic CMakeFiles/cmTC_2b1ab.dir/CheckFunctionExists.c.o -o cmTC_2b1ab  -lrt 
-        make[1]: Leaving directory '/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-VxaKzF'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_4661b/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_4661b.dir/build.make CMakeFiles/cmTC_4661b.dir/build
+        make[1]: Entering directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-gRAZAM'
+        Building C object CMakeFiles/cmTC_4661b.dir/CheckFunctionExists.c.o
+        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=shm_open -o CMakeFiles/cmTC_4661b.dir/CheckFunctionExists.c.o -c /home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-gRAZAM/CheckFunctionExists.c
+        Linking C executable cmTC_4661b
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4661b.dir/link.txt --verbose=1
+        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=shm_open -rdynamic CMakeFiles/cmTC_4661b.dir/CheckFunctionExists.c.o -o cmTC_4661b  -lrt 
+        make[1]: Leaving directory '/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/build/CMakeFiles/CMakeScratch/TryCompile-gRAZAM'
         
       exitCode: 0
 ...

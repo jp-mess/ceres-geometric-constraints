@@ -322,7 +322,7 @@ void SolveWithRing(const char* filename, const char* ring_params_filename) {
     ceres::Solve(options, &problem, &summary);
     std::cout << summary.FullReport() << "\n";
 
-    SaveRingProblem(ring_problem, "ring_adjusted_test.txt");
+    SaveRingProblem(ring_problem, "../../problem_encodings/outputs/ring_solution.txt");
 }
 
 /**

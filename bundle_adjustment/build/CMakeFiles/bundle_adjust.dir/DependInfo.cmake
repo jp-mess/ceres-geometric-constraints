@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/bundle_adjust.cc" "CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.o" "gcc" "CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.o.d"
+  "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/bundle_adjust.cc" "CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.o" "gcc" "CMakeFiles/bundle_adjust.dir/bundle_adjust.cc.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

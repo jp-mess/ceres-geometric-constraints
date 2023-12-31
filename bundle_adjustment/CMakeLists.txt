@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(3DSimulationRig)
+project(CeresGeometricConstraints)
 
 # Find Ceres and specify its location
 find_package(Ceres REQUIRED)

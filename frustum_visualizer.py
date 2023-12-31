@@ -2,11 +2,12 @@ import open3d as o3d
 import numpy as np
 
 class PointCloudCameraVisualizer:
-    def __init__(self, pcd, cameras, center_point, ring_dict=None):
+    def __init__(self, pcd, cameras, center_point, ring_dict=None, draw_green_directions=True):
         self.pcd = pcd
         self.cameras = cameras
         self.center_point = center_point
         self.ring_dict = ring_dict
+        self.draw_green_directions = draw_green_directions
 
     def create_plane(self, center, normal, size=1.0, thickness=0.01, color=[0.53, 0.81, 0.92]):
         box = o3d.geometry.TriangleMesh.create_box(width=size, height=thickness, depth=size)
@@ -65,10 +66,16 @@ class PointCloudCameraVisualizer:
     def create_camera_marker(self, location, size=0.05):
         return o3d.geometry.TriangleMesh.create_sphere(radius=size).translate(location)
 
-    def create_line(self, camera_extrinsic):
+    def create_direction_line(self, camera_extrinsic, length=5):
         camera_position = camera_extrinsic[:3, 3]
+        camera_direction = camera_extrinsic[:3, 2]  # Z-axis (forward direction) of the camera
+
+        # Calculate the end point of the line
+        end_point = camera_position + camera_direction * length
+
+        # Create the line
         line = o3d.geometry.LineSet()
-        line.points = o3d.utility.Vector3dVector([self.center_point, camera_position])
+        line.points = o3d.utility.Vector3dVector([camera_position, end_point])
         line.lines = o3d.utility.Vector2iVector([[0, 1]])
         line.paint_uniform_color([0, 1, 0])  # Green line
         return line
@@ -92,18 +99,14 @@ class PointCloudCameraVisualizer:
         return wireframe
 
     def create_frustum(self, camera_extrinsic, dim=0.2):
+        # Extract camera position and rotation from the extrinsic matrix
         camera_position = camera_extrinsic[:3, 3]
-        direction = self.center_point - camera_position
-        direction /= np.linalg.norm(direction)
+        rotation_matrix = camera_extrinsic[:3, :3]
 
-        # Create rotation matrix
-        up = np.array([0, 1, 0])
-        right = np.cross(up, direction)
-        right /= np.linalg.norm(right)
-        up = np.cross(direction, right)
-        rotation_matrix = np.column_stack((right, up, direction))
-
+        # The extents of the frustum
         extents = np.array([dim, dim, dim * 1.25])  # Making the depth 1.25 times the width/height
+
+        # Create the wireframe box representing the frustum
         wireframe_box = self.create_wireframe_box(camera_position, extents, rotation_matrix)
         return wireframe_box
 
@@ -111,9 +114,13 @@ class PointCloudCameraVisualizer:
         visual_elements = [self.pcd]
         for camera in self.cameras:
             camera_marker = self.create_camera_marker(camera['extrinsic'][:3, 3])
-            line = self.create_line(camera['extrinsic'])
             frustum = self.create_frustum(camera['extrinsic'])
-            visual_elements.extend([camera_marker, line, frustum])
+            if self.draw_green_directions:
+              line = self.create_direction_line(camera['extrinsic'])
+              visual_elements.extend([camera_marker, line, frustum])
+            else:
+              visual_elements.extend([camera_marker, frustum])
+            
 
         # Add the ring if ring_dict is provided
         if self.ring_dict:

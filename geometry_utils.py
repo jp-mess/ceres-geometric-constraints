@@ -3,6 +3,37 @@ from mpl_toolkits.mplot3d import Axes3D
 from scipy.spatial.transform import Rotation as R
 import numpy as np
 
+def load_bal_problem_file(bal_file):
+    with open(bal_file, 'r') as file:
+        n_cameras, n_points, n_observations = map(int, file.readline().split())
+
+        # Skip the observation data
+        for _ in range(n_observations):
+            file.readline()
+
+        # Read the camera parameters
+        cameras = []
+        for _ in range(n_cameras):
+            angle_axis = np.array([float(file.readline()) for _ in range(3)])
+            translation = np.array([float(file.readline()) for _ in range(3)])
+            intrinsic = np.array([float(file.readline()) for _ in range(3)])
+            rotation_matrix = R.from_rotvec(angle_axis).as_matrix()
+
+            extrinsic = np.eye(4)
+            extrinsic[:3, :3] = rotation_matrix
+            extrinsic[:3, 3] = translation
+
+            camera = {'extrinsic': extrinsic, 'intrinsic': np.eye(3)}
+            camera['intrinsic'][0, 0] = intrinsic[0]  # Focal length
+            camera['intrinsic'][0, 2] = intrinsic[1]  # cx
+            camera['intrinsic'][1, 2] = intrinsic[2]  # cy
+
+            cameras.append(camera)
+
+        # Read the 3D points
+        points = np.array([[float(file.readline()) for _ in range(3)] for _ in range(n_points)])
+
+    return cameras, points
 
 def invert_camera_pose(bal_file, output_file):
     with open(bal_file, 'r') as file:

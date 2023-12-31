@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/jackbuntu/workspace/3D-Alignment-Simulation/bundle_adjustment/assess_reprojection.cc" "CMakeFiles/assess_reprojection.dir/assess_reprojection.cc.o" "gcc" "CMakeFiles/assess_reprojection.dir/assess_reprojection.cc.o.d"
+  "/home/jackbuntu/workspace/ceres-geometric-constraints/bundle_adjustment/assess_reprojection.cc" "CMakeFiles/assess_reprojection.dir/assess_reprojection.cc.o" "gcc" "CMakeFiles/assess_reprojection.dir/assess_reprojection.cc.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

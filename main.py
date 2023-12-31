@@ -7,7 +7,7 @@ import open3d as o3d
 import matplotlib.pyplot as plt
 import experiments
 
-np.random.seed(105)
+np.random.seed(108)
 
 if __name__ == "__main__":
   # where to store and generate data (ideally not in the WSL) 

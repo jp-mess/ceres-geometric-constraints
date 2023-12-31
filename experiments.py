@@ -25,7 +25,7 @@ def bmw_ring_experiment(root_dir, input_cloud=None, output_cloud_dir=None, visua
   pos_noise = 1.0
   rot_noise = 0.0
 
-  ring_noise = 1.0
+  ring_noise = 0.2
 
 
   # to find the center of the pcd, use CloudCompare or something
@@ -51,9 +51,14 @@ def bmw_ring_experiment(root_dir, input_cloud=None, output_cloud_dir=None, visua
   correspondences = image_utils.rasterize(cameras=cameras,indices_to_project=indices,
                                                           points=np.array(pcd.points),
                                                           colors=pcd.colors)
+
+  ba_encoding_file = "problem_encodings/ring_problem_input_true.txt"
+  geometry_utils.create_bal_problem_file(correspondences, n_cameras, np.array(pcd.points), cameras, ba_encoding_file,
+                                         pixel_noise_scale=0.0, translation_noise_scale=0.0, rotation_noise_scale=0.0)
+  
  
   # saves the simulated cameras and world points for bundle adjustment (you probably want this) 
-  ba_encoding_file = "problem_encodings/ring_problem_input.txt"
+  ba_encoding_file = "problem_encodings/ring_problem_input_noised.txt"
   geometry_utils.create_bal_problem_file(correspondences, n_cameras, np.array(pcd.points), cameras, ba_encoding_file,
                                          pixel_noise_scale=pix_noise, translation_noise_scale=pos_noise, rotation_noise_scale=rot_noise)
   
