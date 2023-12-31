@@ -18,8 +18,7 @@ This repository contains a bundle adjuster capable of optimizing camera poses us
 
 ```bash
 python3 -m venv venv
-source venv/bin/activate  # On Unix or macOS
-venv\Scripts\activate     # On Windows
+source venv/bin/activate  # I assume you're using Linux
 
 pip install -r requirements.txt
 ```
