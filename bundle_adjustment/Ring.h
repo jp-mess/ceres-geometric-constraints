@@ -22,22 +22,19 @@ void PrettyPrintArray(const double* array, int size, const std::string& prefix =
     }
 }
 
+
 Eigen::Vector3d ThetaTo3DPoint(double theta, 
                                const Eigen::Vector3d& center, 
-                               const Eigen::Vector3d& normal, 
+                               const Eigen::Quaterniond& ring_orientation, 
                                double radius) {
-    // Step 1: Create a reference direction within the plane
-    Eigen::Vector3d reference_direction = Eigen::Vector3d::UnitX() - (Eigen::Vector3d::UnitX().dot(normal)) * normal;
-    reference_direction.normalize();
+    // Step 1: Calculate the point's position in the ring's local XY plane
+    Eigen::Vector3d point_in_plane(radius * cos(theta), radius * sin(theta), 0.0);
 
-    // Compute the orthogonal direction within the plane
-    Eigen::Vector3d orthogonal_direction = reference_direction.cross(normal); // bad: normal.cross(reference_direction);
+    // Step 2: Rotate the point from the ring's local coordinate system to the global coordinate system
+    Eigen::Vector3d point_in_global_space = ring_orientation * point_in_plane;
 
-    // Step 2: Calculate the point's position in the plane
-    Eigen::Vector3d point_in_plane = radius * (cos(theta) * reference_direction + sin(theta) * orthogonal_direction);
-
-    // Step 3: Translate the point back to the original coordinate system
-    Eigen::Vector3d point_in_original_space = point_in_plane + center;
+    // Step 3: Translate the point by the ring's center to get its position in the original coordinate system
+    Eigen::Vector3d point_in_original_space = point_in_global_space + center;
 
     return point_in_original_space;
 }
@@ -45,65 +42,68 @@ Eigen::Vector3d ThetaTo3DPoint(double theta,
 template <typename T>
 Eigen::Matrix<T, 3, 1> ThetaTo3DPoint(const T& theta, 
                                       const Eigen::Matrix<T, 3, 1>& center, 
-                                      const Eigen::Matrix<T, 3, 1>& normal, 
+                                      const Eigen::Quaternion<T>& ring_orientation, 
                                       const T& radius) {
-    // Step 1: Create a reference direction within the plane
-    Eigen::Matrix<T, 3, 1> reference_direction = Eigen::Matrix<T, 3, 1>::UnitX() - (Eigen::Matrix<T, 3, 1>::UnitX().dot(normal)) * normal;
-    reference_direction.normalize();
+    // Step 1: Calculate the point's position in the ring's local XY plane
+    Eigen::Matrix<T, 3, 1> point_in_plane(radius * cos(theta), radius * sin(theta), T(0));
 
-    // Compute the orthogonal direction within the plane
-    Eigen::Matrix<T, 3, 1> orthogonal_direction = reference_direction.cross(normal);
+    // Step 2: Rotate the point from the ring's local coordinate system to the global coordinate system
+    Eigen::Matrix<T, 3, 1> point_in_global_space = ring_orientation * point_in_plane;
 
-    // Step 2: Calculate the point's position in the plane
-    Eigen::Matrix<T, 3, 1> point_in_plane = radius * (cos(theta) * reference_direction + sin(theta) * orthogonal_direction);
-
-    // Step 3: Translate the point back to the original coordinate system
-    Eigen::Matrix<T, 3, 1> point_in_original_space = point_in_plane + center;
+    // Step 3: Translate the point by the ring's center to get its position in the original coordinate system
+    Eigen::Matrix<T, 3, 1> point_in_original_space = point_in_global_space + center;
 
     return point_in_original_space;
 }
 
+
 double ProjectPointOntoRing(const Eigen::Vector3d& point, 
                             const Eigen::Vector3d& center, 
-                            const Eigen::Vector3d& normal) {
+                            const Eigen::Quaterniond& ring_orientation) {
     // Step 1: Translate the point to the ring's coordinate system
     Eigen::Vector3d translated_point = point - center;
 
-    // Step 2: Project the translated point onto the plane defined by the ring's normal
-    Eigen::Vector3d projected_point = translated_point - (translated_point.dot(normal)) * normal;
+    // Step 2: Rotate the translated point to align with the ring's local coordinate system
+    // Inverse rotation is used to bring the point into the ring's coordinate frame
+    Eigen::Quaterniond inverse_orientation = ring_orientation.conjugate();
+    Eigen::Vector3d aligned_point = inverse_orientation * translated_point;
 
-    // Step 3: Find the theta in the plane
-    // Choose an arbitrary direction in the plane as the reference for theta = 0
-    Eigen::Vector3d reference_direction = Eigen::Vector3d::UnitX() - (Eigen::Vector3d::UnitX().dot(normal)) * normal;
-    reference_direction.normalize();
-
-    // Compute the angle between the reference direction and the projected point
-    double theta = atan2(projected_point.dot(Eigen::Vector3d::UnitZ()), projected_point.dot(reference_direction));
+    // Step 3: Since the ring lies in the XY plane of its local coordinate system,
+    // the Z-component of aligned_point can be ignored for theta calculation.
+    // Compute the angle between the X-axis and the projected point in the XY plane
+    double theta = atan2(aligned_point.y(), aligned_point.x());
 
     return theta;
 }
 
 
 class Ring {
-    public:
-        Ring() {}
-        Ring(const Eigen::Vector3d& center, const Eigen::Vector3d& normal, double radius, double elevation_degree)
-            : center_(center), normal_(normal), radius_(radius), elevation_degree_(elevation_degree) {}
+public:
 
-        // Getters for the ring parameters
-        Eigen::Vector3d center() const { return center_; }
-        Eigen::Vector3d normal() const { return normal_; }
-        double radius() const { return radius_; }
-        double elevation_degree() const { return elevation_degree_; }
+    Ring() : center_(Eigen::Vector3d::Zero()), 
+             orientation_(Eigen::Quaterniond::Identity()), 
+             radius_(0.0), 
+             elevation_degree_(0.0) {}
 
-        // TODO: Implement Plus and Jacobian operations
+    Ring(const Eigen::Vector3d& center, const Eigen::Quaterniond& orientation, double radius, double elevation_degree)
+        : center_(center), orientation_(orientation), radius_(radius), elevation_degree_(elevation_degree) {
+        // Normalize the quaternion to ensure it's a valid rotation
+        orientation_.normalize();
+    }
 
-    private:
-        Eigen::Vector3d center_;
-        Eigen::Vector3d normal_;
-        double radius_;
-        double elevation_degree_;
+    // Getters for the ring parameters
+    Eigen::Vector3d center() const { return center_; }
+    Eigen::Quaterniond orientation() const { return orientation_; }
+    double radius() const { return radius_; }
+    double elevation_degree() const { return elevation_degree_; }
+
+private:
+    Eigen::Vector3d center_;
+    Eigen::Quaterniond orientation_;  // Represents the ring's orientation in 3D space
+    double radius_;
+    double elevation_degree_;
 };
+
 
 
 Ring LoadRingParameters(const std::string& file_path) {
@@ -115,8 +115,8 @@ Ring LoadRingParameters(const std::string& file_path) {
     std::string line;
     Eigen::Vector3d center;
     Eigen::Vector3d normal;
-    double radius;
-    double elevation_degree;
+    double radius = 0.0;
+    double elevation_degree = 0.0;
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
@@ -136,9 +136,19 @@ Ring LoadRingParameters(const std::string& file_path) {
         }
     }
 
-    return Ring(center, normal, radius, elevation_degree);
-}
+    // Convert the normal vector to a quaternion
+    Eigen::Quaterniond orientation;
+    Eigen::Vector3d z_axis(0, 0, 1);
+    if (normal.norm() > std::numeric_limits<double>::epsilon()) {
+        normal.normalize();
+        orientation = Eigen::Quaterniond::FromTwoVectors(z_axis, normal);
+    } else {
+        // Default orientation if normal is zero or nearly zero
+        orientation = Eigen::Quaterniond::Identity();
+    }
 
+    return Ring(center, orientation, radius, elevation_degree);
+}
 struct RingCost {
     RingCost(double observed_x, double observed_y)
         : observed_x(observed_x), observed_y(observed_y) {}
@@ -150,38 +160,35 @@ struct RingCost {
                     const T* const ring_params, // Ring parameters
                     T* residuals) const {
 
-
-        // Camera parameters: quaternion (4), translation (3), intrinsics (3)
-        const T* quaternion = extrinsic_params;
+        // Camera parameters: quaternion (4), theta (1), intrinsics (3)
+        const T* camera_quaternion = extrinsic_params;
+        const T& theta = extrinsic_params[4];  // Theta is the fifth parameter
         const T* intrinsics = intrinsic_params;
 
-        // Conjugate of the quaternion for inverse rotation.
-        T conjugate_quaternion[4] = {quaternion[0], 
-                                    -quaternion[1], 
-                                    -quaternion[2], 
-                                    -quaternion[3]};
-
+        // Conjugate of the camera quaternion for inverse rotation.
+        T conjugate_camera_quaternion[4] = {camera_quaternion[0], 
+                                            -camera_quaternion[1], 
+                                            -camera_quaternion[2], 
+                                            -camera_quaternion[3]};
  
-        const T& theta = extrinsic_params[4];  // Theta is the fifth parameter
-
-        // Extract the ring parameters: center (3), normal (3), radius (1)
+        // Extract the ring parameters: center (3), orientation quaternion (4), radius (1)
         Eigen::Matrix<T, 3, 1> center;
-        Eigen::Matrix<T, 3, 1> normal;
+        Eigen::Quaternion<T> ring_orientation;
         center << ring_params[0], ring_params[1], ring_params[2];
-        normal << ring_params[3], ring_params[4], ring_params[5];
-        const T& radius = ring_params[6];
+        ring_orientation.coeffs() << ring_params[3], ring_params[4], ring_params[5], ring_params[6];
+        const T& radius = ring_params[7];
 
         // Convert theta back to translation
-        Eigen::Matrix<T, 3, 1> translation = ThetaTo3DPoint(theta, center, normal, radius);
+        Eigen::Matrix<T, 3, 1> translation = ThetaTo3DPoint(theta, center, ring_orientation, radius);
 
         // Apply inverse translation: point - translation.
         T translated_point[3] = {point[0] - translation[0],
                                 point[1] - translation[1],
                                 point[2] - translation[2]};
 
-           // Rotate the translated point using the conjugate of the camera quaternion.
+        // Rotate the translated point using the conjugate of the camera quaternion.
         T rotated_translated_point[3];
-        ceres::QuaternionRotatePoint(conjugate_quaternion, translated_point, rotated_translated_point);
+        ceres::QuaternionRotatePoint(conjugate_camera_quaternion, translated_point, rotated_translated_point);
 
         // Project the 3D point onto the 2D camera plane.
         const T& focal = intrinsics[0];
@@ -208,14 +215,13 @@ struct RingCost {
         // 5: camera parameter block (4 quaternion, 1 theta)
         // 3: intrinsic parameter block
         // 3: world point parameter block
-        // 7: ring parameter block (3 center, 3 normal, 1 radius)
-        return new ceres::AutoDiffCostFunction<RingCost, 2, 5, 3, 3, 7>(
+        // 8: ring parameter block (3 center, 4 quaternion, 1 radius)
+        return new ceres::AutoDiffCostFunction<RingCost, 2, 5, 3, 3, 8>(
             new RingCost(observed_x, observed_y));
     }
 
     double observed_x, observed_y;
 };
-
 
 
 class RingProblem {
@@ -268,87 +274,90 @@ public:
         }
     }
 
-    bool LoadFiles(const char* bal_file, const char* ring_file_path) {
+   bool LoadFiles(const char* bal_file, const char* ring_file_path) {
+    LoadRingFile(ring_file_path);
 
-        LoadRingFile(ring_file_path);
-
-        FILE* fptr = fopen(bal_file, "r");
-        if (fptr == nullptr) {
-            return false;
-        }
-
-        FscanfOrDie(fptr, "%d", &num_cameras_);
-        FscanfOrDie(fptr, "%d", &num_points_);
-        FscanfOrDie(fptr, "%d", &num_observations_);
-
-        point_index_ = new int[num_observations_];
-        camera_index_ = new int[num_observations_];
-        observations_ = new double[2 * num_observations_];
-
-        int n_geometry_params = 3 + 3 + 1; // Center + Normal + Radius
-        int n_result_params = n_camera_params * num_cameras_ + 3 * num_points_;
-        num_parameters_ = n_result_params + n_geometry_params;
-        parameters_ = new double[num_parameters_];
-
-        // Index where the ring parameters start
-        ring_params_start_index = n_result_params;
-
-        // Store the ring's center coordinates
-        parameters_[ring_params_start_index] = ring_.center().x();
-        parameters_[ring_params_start_index + 1] = ring_.center().y();
-        parameters_[ring_params_start_index + 2] = ring_.center().z();
-
-        // Store the ring's normal vector
-        parameters_[ring_params_start_index + 3] = ring_.normal().x();
-        parameters_[ring_params_start_index + 4] = ring_.normal().y();
-        parameters_[ring_params_start_index + 5] = ring_.normal().z();
-
-        // Store the ring's radius
-        parameters_[ring_params_start_index + 6] = ring_.radius();
-        
-        
-
-        for (int i = 0; i < num_observations_; ++i) {
-            FscanfOrDie(fptr, "%d", camera_index_ + i);
-            FscanfOrDie(fptr, "%d", point_index_ + i);
-            for (int j = 0; j < 2; ++j) {
-                FscanfOrDie(fptr, "%lf", observations_ + 2 * i + j);
-            }
-        }
-
-        for (int i = 0; i < num_cameras_; ++i) {
-            double angle_axis[3];
-            for (int j = 0; j < 3; ++j) {
-                FscanfOrDie(fptr, "%lf", &angle_axis[j]);
-            }
-            double quaternion[4];
-            ceres::AngleAxisToQuaternion(angle_axis, quaternion);
-            for (int j = 0; j < 4; ++j) {
-                parameters_[n_camera_params * i + j] = quaternion[j];  // Store quaternion
-            }
-
-            double translation[3];
-            for (int j = 0; j < 3; ++j) {
-                FscanfOrDie(fptr, "%lf", &translation[j]);
-            }
-            Eigen::Vector3d translation_vector(translation[0], translation[1], translation[2]);
-            double theta = ProjectPointOntoRing(translation_vector, ring_.center(), ring_.normal());
-            parameters_[n_camera_params * i + 4] = theta;  // Store theta
-
-            // Store intrinsic parameters
-            for (int j = 0; j < 3; j++) {
-                FscanfOrDie(fptr, "%lf", &parameters_[n_camera_params*i + n_extrinsic + j]);
-            }
-        }
-        // World Points
-        for (int i = 0; i < num_points_; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                FscanfOrDie(fptr, "%lf", &parameters_[n_camera_params * num_cameras_ + 3 * i + j]);
-            }
-        }
-        fclose(fptr);
-        return true;
+    FILE* fptr = fopen(bal_file, "r");
+    if (fptr == nullptr) {
+        return false;
     }
+
+    FscanfOrDie(fptr, "%d", &num_cameras_);
+    FscanfOrDie(fptr, "%d", &num_points_);
+    FscanfOrDie(fptr, "%d", &num_observations_);
+
+    point_index_ = new int[num_observations_];
+    camera_index_ = new int[num_observations_];
+    observations_ = new double[2 * num_observations_];
+
+    int n_geometry_params = 3 + 4 + 1; // Center + Quaternion + Radius
+    int n_result_params = n_camera_params * num_cameras_ + 3 * num_points_;
+    num_parameters_ = n_result_params + n_geometry_params;
+    parameters_ = new double[num_parameters_];
+
+    // Index where the ring parameters start
+    ring_params_start_index = n_result_params;
+
+    // Store the ring's center coordinates
+    parameters_[ring_params_start_index] = ring_.center().x();
+    parameters_[ring_params_start_index + 1] = ring_.center().y();
+    parameters_[ring_params_start_index + 2] = ring_.center().z();
+
+    // Store the ring's orientation quaternion
+    Eigen::Quaterniond ring_orientation = ring_.orientation();
+    parameters_[ring_params_start_index + 3] = ring_orientation.x();
+    parameters_[ring_params_start_index + 4] = ring_orientation.y();
+    parameters_[ring_params_start_index + 5] = ring_orientation.z();
+    parameters_[ring_params_start_index + 6] = ring_orientation.w();
+
+    // Store the ring's radius
+    parameters_[ring_params_start_index + 7] = ring_.radius();
+
+    for (int i = 0; i < num_observations_; ++i) {
+        FscanfOrDie(fptr, "%d", camera_index_ + i);
+        FscanfOrDie(fptr, "%d", point_index_ + i);
+        for (int j = 0; j < 2; ++j) {
+            FscanfOrDie(fptr, "%lf", observations_ + 2 * i + j);
+        }
+    }
+
+    for (int i = 0; i < num_cameras_; ++i) {
+        double angle_axis[3];
+        for (int j = 0; j < 3; ++j) {
+            FscanfOrDie(fptr, "%lf", &angle_axis[j]);
+        }
+        double quaternion[4];
+        ceres::AngleAxisToQuaternion(angle_axis, quaternion);
+        for (int j = 0; j < 4; ++j) {
+            parameters_[n_camera_params * i + j] = quaternion[j];
+        }
+
+        double translation[3];
+        for (int j = 0; j < 3; ++j) {
+            FscanfOrDie(fptr, "%lf", &translation[j]);
+        }
+        Eigen::Vector3d translation_vector(translation[0], translation[1], translation[2]);
+
+        // Use the updated ProjectPointOntoRing function
+        Eigen::Quaterniond ring_orientation(ring_.orientation().w(), ring_.orientation().x(), ring_.orientation().y(), ring_.orientation().z());
+        double theta = ProjectPointOntoRing(translation_vector, ring_.center(), ring_orientation);
+        parameters_[n_camera_params * i + 4] = theta;  // Store theta
+
+        // Store intrinsic parameters
+        for (int j = 0; j < 3; j++) {
+            FscanfOrDie(fptr, "%lf", &parameters_[n_camera_params*i + n_extrinsic + j]);
+        }
+    }
+
+    // World Points
+    for (int i = 0; i < num_points_; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            FscanfOrDie(fptr, "%lf", &parameters_[n_camera_params * num_cameras_ + 3 * i + j]);
+        }
+    }
+    fclose(fptr);
+    return true;
+}
 
 private:
     template <typename T>

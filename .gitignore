@@ -14,7 +14,7 @@ source_clouds/*
 # As well as problem encodings
 problem_encodings/*
 
-# As well as manifold encodings, though these are small
-manifold_encodings/*
+# As well as geometry encodings, though these are small
+geometry_encodings/*
 
 .vscode/

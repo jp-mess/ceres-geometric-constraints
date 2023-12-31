@@ -177,7 +177,7 @@ def update_bal_problem_with_ring_cameras(ring_params_file, old_bal_file, new_bal
 
 
 def main():
-    ring_params = load_ring_params("manifold_encodings/ring_params.txt")
+    ring_params = load_ring_params("geometry_encodings/ring_params.txt")
     random_points = np.random.uniform(-100, 100, (100, 3))
     projected_points = np.array([project_point_onto_ring(point, ring_params) for point in random_points])
 

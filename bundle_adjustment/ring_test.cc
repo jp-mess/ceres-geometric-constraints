@@ -41,7 +41,7 @@ void SaveRingProblem(const RingProblem& ring_problem, const std::string& output_
 
         // Convert theta back to translation and write translation (3 lines)
         double theta = extrinsic[4];  // Theta is the fifth parameter
-        Eigen::Vector3d translation = ThetaTo3DPoint(theta, ring_problem.ring().center(), ring_problem.ring().normal(), ring_problem.ring().radius());
+        Eigen::Vector3d translation = ThetaTo3DPoint(theta, ring_problem.ring().center(), ring_problem.ring().orientation(), ring_problem.ring().radius());
         out_file << translation.x() << "\n" << translation.y() << "\n" << translation.z() << "\n";
 
         // Write intrinsic parameters (3 lines)

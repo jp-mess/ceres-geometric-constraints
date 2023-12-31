@@ -89,7 +89,7 @@ void SaveRingProblem(const RingProblem& ring_problem, const std::string& output_
 
         // Convert theta back to translation and write translation (3 lines)
         double theta = extrinsic[4];  // Theta is the fifth parameter
-        Eigen::Vector3d translation = ThetaTo3DPoint(theta, ring_problem.ring().center(), ring_problem.ring().normal(), ring_problem.ring().radius());
+        Eigen::Vector3d translation = ThetaTo3DPoint(theta, ring_problem.ring().center(), ring_problem.ring().orientation(), ring_problem.ring().radius());
         out_file << translation.x() << "\n" << translation.y() << "\n" << translation.z() << "\n";
 
         // Write intrinsic parameters (3 lines)
@@ -302,7 +302,9 @@ void SolveWithRing(const char* filename, const char* ring_params_filename) {
         problem.AddParameterBlock(intrinsics, 3);
         problem.SetParameterBlockConstant(intrinsics);
 
-        problem.AddParameterBlock(geometry, 7);
+        ceres::Manifold* ring_manifold = new ceres::ProductManifold<ceres::EuclideanManifold<3>, ceres::QuaternionManifold, ceres::EuclideanManifold<1>>{};
+
+        problem.AddParameterBlock(geometry, 8, ring_manifold);
 
         // Assuming camera has 5 parameters (1 for theta, 4 for quaternion)
         // problem.AddParameterBlock(extrinsics, 5, camera_manifold);
@@ -322,6 +324,35 @@ void SolveWithRing(const char* filename, const char* ring_params_filename) {
 
     SaveRingProblem(ring_problem, "ring_adjusted_test.txt");
 }
+
+/**
+ * Main function for running the bundle adjuster.
+ * 
+ * This program adjusts the camera parameters and 3D world points to minimize
+ * reprojection error, based on the provided BAL (Bundle Adjustment in the Large) problem file.
+ * It supports different geometry types: quaternion, angle-axis, and ring.
+ * 
+ * Usage:
+ * 
+ * For quaternion-based optimization:
+ *   bundle_adjuster <bal_problem_file> quat
+ *   - <bal_problem_file>: Path to the BAL problem file.
+ *   - 'quat': Specifies that quaternion-based optimization is to be used.
+ * 
+ * For angle-axis-based optimization:
+ *   bundle_adjuster <bal_problem_file> angle
+ *   - <bal_problem_file>: Path to the BAL problem file.
+ *   - 'angle': Specifies that angle-axis-based optimization is to be used.
+ * 
+ * For ring-based optimization:
+ *   bundle_adjuster <bal_problem_file> ring <geometry_params_file>
+ *   - <bal_problem_file>: Path to the BAL problem file.
+ *   - 'ring': Specifies that ring-based optimization is to be used.
+ *   - <geometry_params_file>: Path to the file containing the geometry parameters for the ring.
+ * 
+ * The program will choose the optimization method based on the specified geometry type
+ * and perform bundle adjustment accordingly.
+ */
 
 int main(int argc, char** argv) {
     if (argc < 3) {

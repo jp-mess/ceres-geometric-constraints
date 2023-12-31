@@ -25,7 +25,7 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
   pos_noise = 1.0
   rot_noise = 0.0
 
-  ring_noise = 0.5
+  ring_noise = 0.0
 
 
   # to find the center of the pcd, use CloudCompare or something
@@ -37,7 +37,7 @@ def bmw_bundle_adjustment_experiment(root_dir, input_cloud=None, output_cloud_di
   up_direction = "y"
   cameras = list()
 
-  ring_params_file = "manifold_encodings/ring_params.txt"
+  ring_params_file = "geometry_encodings/ring_params.txt"
   cameras = geometry_utils.make_cameras_on_ring(center, camera_radius, up_direction, n_cameras, ring_params_file=ring_params_file)
   cameras = [general_utils.package_camera(camera, camera_parameters, 'camera_' + str(i)) for i, camera in enumerate(cameras)]
  
@@ -101,7 +101,7 @@ def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=No
   # with slight variation)  
   up_direction = "y"
   cameras = list()
-  ring_params_file = "manifold_encodings/ring_params.txt"
+  ring_params_file = "geometry_encodings/ring_params.txt"
   cameras = geometry_utils.make_cameras_on_ring(center, camera_radius, up_direction, n_cameras, ring_params_file=ring_params_file)
   cameras = [general_utils.package_camera(camera, camera_parameters, 'camera_' + str(i)) for i, camera in enumerate(cameras)]
 
