@@ -16,6 +16,15 @@
 
 #include <iomanip>
 
+std::array<double, 4> ConvertEigenToCeresQuaternion(const Eigen::Quaterniond& eigen_quat) {
+    std::array<double, 4> ceres_quat;
+    ceres_quat[0] = eigen_quat.x();
+    ceres_quat[1] = eigen_quat.y();
+    ceres_quat[2] = eigen_quat.z();
+    ceres_quat[3] = eigen_quat.w();
+    return ceres_quat;
+}
+
 void PrettyPrintArray(const double* array, int size, const std::string& prefix = "Index ") {
     for (int i = 0; i < size; ++i) {
         std::cout << prefix << i << ": " << std::fixed << std::setprecision(4) << array[i] << std::endl;
@@ -79,7 +88,6 @@ double ProjectPointOntoRing(const Eigen::Vector3d& point,
 
 class Ring {
 public:
-
     Ring() : center_(Eigen::Vector3d::Zero()), 
              orientation_(Eigen::Quaterniond::Identity()), 
              radius_(0.0), 
@@ -87,8 +95,13 @@ public:
 
     Ring(const Eigen::Vector3d& center, const Eigen::Quaterniond& orientation, double radius, double elevation_degree)
         : center_(center), orientation_(orientation), radius_(radius), elevation_degree_(elevation_degree) {
-        // Normalize the quaternion to ensure it's a valid rotation
         orientation_.normalize();
+    }
+
+    // Additional constructor accepting a std::array for quaternion (assumed ceres format)
+    Ring(const Eigen::Vector3d& center, const std::array<double, 4>& ceres_orientation, double radius, double elevation_degree)
+        : Ring(center, Eigen::Quaterniond(ceres_orientation[3], ceres_orientation[0], ceres_orientation[1], ceres_orientation[2]), radius, elevation_degree) {
+        // Constructor chaining
     }
 
     // Getters for the ring parameters
@@ -99,11 +112,10 @@ public:
 
 private:
     Eigen::Vector3d center_;
-    Eigen::Quaterniond orientation_;  // Represents the ring's orientation in 3D space
+    Eigen::Quaterniond orientation_;
     double radius_;
     double elevation_degree_;
 };
-
 
 
 Ring LoadRingParameters(const std::string& file_path) {
@@ -147,7 +159,9 @@ Ring LoadRingParameters(const std::string& file_path) {
         orientation = Eigen::Quaterniond::Identity();
     }
 
-    return Ring(center, orientation, radius, elevation_degree);
+    auto ceres_quaternion = ConvertEigenToCeresQuaternion(orientation);
+
+    return Ring(center, ceres_quaternion, radius, elevation_degree);
 }
 struct RingCost {
     RingCost(double observed_x, double observed_y)
@@ -175,6 +189,7 @@ struct RingCost {
         Eigen::Matrix<T, 3, 1> center;
         Eigen::Quaternion<T> ring_orientation;
         center << ring_params[0], ring_params[1], ring_params[2];
+        // Eigen uses x,y,z,w format when loading in quaternions this way (it's the API that is wrong)
         ring_orientation.coeffs() << ring_params[3], ring_params[4], ring_params[5], ring_params[6];
         const T& radius = ring_params[7];
 
@@ -304,7 +319,7 @@ public:
     parameters_[ring_params_start_index + 1] = ring_.center().y();
     parameters_[ring_params_start_index + 2] = ring_.center().z();
 
-    // Store the ring's orientation quaternion
+    // Store the ring's orientation quaternion (Ceres wants x,y,z,w)
     Eigen::Quaterniond ring_orientation = ring_.orientation();
     parameters_[ring_params_start_index + 3] = ring_orientation.x();
     parameters_[ring_params_start_index + 4] = ring_orientation.y();

@@ -25,6 +25,7 @@ struct QuatCost {
     const T* intrinsics = intrinsic_params;
 
     // Conjugate of the quaternion for inverse rotation.
+    // Eigen uses x,y,z,w format when loading in quaternions this way (it's the API that is wrong)
     T conjugate_quaternion[4] = {quaternion[0], 
                                  -quaternion[1], 
                                  -quaternion[2], 
