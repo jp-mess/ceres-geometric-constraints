@@ -258,8 +258,9 @@ public:
     double* mutable_geometry_params() {
         return parameters_ + ring_params_start_index;
     }
+
+    
     const double* geometry_params() const {
-        int ring_params_start_index = n_camera_params * num_cameras_ + 3 * num_points_;
         return parameters_ + ring_params_start_index;
     }
 

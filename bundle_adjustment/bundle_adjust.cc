@@ -53,7 +53,7 @@
 #include "Ring.h"
 #include "angle_manifold.h"
 
-void SaveRingProblem(const RingProblem& ring_problem, const std::string& output_filename) {
+void SaveRingProblem(const RingProblem& ring_problem, const std::string& output_filename, const std::string& ring_params_filename) {
     std::ofstream out_file(output_filename);
     if (!out_file) {
         std::cerr << "ERROR: unable to open output file " << output_filename << ".\n";
@@ -106,6 +106,36 @@ void SaveRingProblem(const RingProblem& ring_problem, const std::string& output_
     }
     
     out_file.close();
+
+
+    // Save the estimated ring parameters
+    std::ofstream ring_file(ring_params_filename);
+    if (!ring_file) {
+        std::cerr << "ERROR: unable to open ring parameters file " << ring_params_filename << ".\n";
+        return;
+    }
+
+    const double* geometry_params = ring_problem.geometry_params();
+    Eigen::Vector3d center(geometry_params[0], geometry_params[1], geometry_params[2]);
+
+    // Eigen is (w,x,y,z) while Ceres is (x,y,z,w)
+    Eigen::Quaterniond quaternion(geometry_params[6], geometry_params[3], geometry_params[4], geometry_params[5]);
+    
+    double radius = geometry_params[7];
+
+    // Apply the inverse of the quaternion to the Z-axis to retrieve the estimated normal
+    Eigen::Vector3d z_axis(0, 0, 1);
+    Eigen::Vector3d estimated_normal = quaternion * z_axis;
+
+    // Write ring parameters
+    ring_file << "type: ring\n";
+    ring_file << "center: " << center.x() << "," << center.y() << "," << center.z() << "\n";
+    ring_file << "normal: " << estimated_normal.x() << "," << estimated_normal.y() << "," << estimated_normal.z() << "\n";
+    ring_file << "radius: " << radius << "\n";
+    ring_file << "elevation_degree: NaN\n";  // Placeholder for elevation degree
+
+    ring_file.close();
+    
 }
 
 void SaveBALProblem(const BALProblem& bal_problem, const std::string& output_filename) {
@@ -322,7 +352,7 @@ void SolveWithRing(const char* filename, const char* ring_params_filename) {
     ceres::Solve(options, &problem, &summary);
     std::cout << summary.FullReport() << "\n";
 
-    SaveRingProblem(ring_problem, "../../problem_encodings/outputs/ring_solution.txt");
+    SaveRingProblem(ring_problem, "../../problem_encodings/outputs/ring_solution.txt", "../../geometry_encodings/outputs/ring_estimated.txt");
 }
 
 /**
