@@ -120,10 +120,9 @@ void SaveRingProblem(const RingProblem& ring_problem, const std::string& output_
 
     // Eigen is (w,x,y,z) while Ceres is (x,y,z,w)
     Eigen::Quaterniond quaternion(geometry_params[6], geometry_params[3], geometry_params[4], geometry_params[5]);
-    
+
     double radius = geometry_params[7];
 
-    // Apply the inverse of the quaternion to the Z-axis to retrieve the estimated normal
     Eigen::Vector3d z_axis(0, 0, 1);
     Eigen::Vector3d estimated_normal = quaternion * z_axis;
 

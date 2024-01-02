@@ -1,4 +1,32 @@
 
+def plot_images(images):
+    import matplotlib.pyplot as plt
+
+    # Ensure there are exactly 6 images
+    if len(images) != 6:
+        raise ValueError("Provide exactly 6 images")
+    
+    # Create a 2x3 grid of subplots
+    fig, axes = plt.subplots(2, 3, figsize=(10, 7))
+    
+    # Adjust spacing to minimize white space
+    plt.subplots_adjust(wspace=0.1, hspace=0.1)
+    
+    # Loop through the images and display each one in the corresponding subplot
+    for i, ax in enumerate(axes.flatten()):
+        # Display image
+        ax.imshow(images[i])
+        
+        # Remove axis ticks and labels
+        ax.set_xticks([])
+        ax.set_yticks([])
+
+    plt.savefig("cars.png", bbox_inches='tight', pad_inches=0.1)
+    
+    plt.show()
+
+
+
 def bmw_ring_experiment(root_dir, input_cloud=None, output_cloud_dir=None, visualize_frustums=True):
   import geometry_utils
   import image_utils
@@ -79,7 +107,7 @@ def bmw_ring_experiment(root_dir, input_cloud=None, output_cloud_dir=None, visua
     visualizer.visualize()
 
 
-def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=None,plot_rendered_images=True, visualize_frustrums=True):
+def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=None,plot_rendered_images=True, visualize_frustrums=False):
   import geometry_utils
   import image_utils
   import general_utils
@@ -87,7 +115,7 @@ def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=No
   import open3d as o3d
   import matplotlib.pyplot as plt
 
-  n_cameras = 3
+  n_cameras = 6
   
   img_dim = 600
   cx = img_dim // 2
@@ -95,7 +123,7 @@ def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=No
   foc = 525
   camera_parameters = general_utils.create_pinhole(foc,foc,cx,cy)
 
-  n_points = 500000 // 30
+  n_points = 500000 // 5
   camera_radius = 5
 
   # to find the center of the pcd, use CloudCompare or something
@@ -130,9 +158,12 @@ def bmw_retriangulation_experiment(root_dir,input_cloud=None,output_cloud_dir=No
     visualizer.visualize()
 
   if plot_rendered_images: 
-    for image in images:
-      plt.imshow(image)
-      plt.show()
+    if len(images) == 6:
+       plot_images(images)
+    else:
+      for image in images:
+        plt.imshow(image)
+        plt.show()
 
   return camera_parameters, images
 

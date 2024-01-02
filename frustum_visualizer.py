@@ -1,13 +1,33 @@
 import open3d as o3d
 import numpy as np
+from dataclasses import dataclass
+
+@dataclass
+class WhiteBackground:
+    background = [1, 1, 1]
+    frustum = [0, 0, 0]
+    direction = [0, 1, 0]
+
+@dataclass
+class CharcoalBackground:
+    background = [0.1, 0.1, 0.1]
+    frustum = [1,1,1]
+    direction = [0,1,0]
+
+
 
 class PointCloudCameraVisualizer:
     def __init__(self, pcd, cameras, center_point, ring_dict=None, draw_green_directions=True):
-        self.pcd = pcd
+        if isinstance(pcd, str):
+            self.pcd = o3d.io.read_point_cloud(pcd)
+        else:
+            self.pcd = pcd
+
         self.cameras = cameras
         self.center_point = center_point
         self.ring_dict = ring_dict
         self.draw_green_directions = draw_green_directions
+        self.cmap = WhiteBackground()
 
     def create_plane(self, center, normal, size=1.0, thickness=0.01, color=[0.53, 0.81, 0.92]):
         box = o3d.geometry.TriangleMesh.create_box(width=size, height=thickness, depth=size)
@@ -77,7 +97,7 @@ class PointCloudCameraVisualizer:
         line = o3d.geometry.LineSet()
         line.points = o3d.utility.Vector3dVector([camera_position, end_point])
         line.lines = o3d.utility.Vector2iVector([[0, 1]])
-        line.paint_uniform_color([0, 1, 0])  # Green line
+        line.paint_uniform_color(self.cmap.direction)
         return line
 
     def create_wireframe_box(self, center, extents, rotation_matrix):
@@ -95,7 +115,7 @@ class PointCloudCameraVisualizer:
         wireframe = o3d.geometry.LineSet()
         wireframe.points = o3d.utility.Vector3dVector(corners)
         wireframe.lines = o3d.utility.Vector2iVector(lines)
-        wireframe.paint_uniform_color([1, 1, 1])  # White color
+        wireframe.paint_uniform_color(self.cmap.frustum)
         return wireframe
 
     def create_frustum(self, camera_extrinsic, dim=0.2):
@@ -133,6 +153,6 @@ class PointCloudCameraVisualizer:
             vis.add_geometry(element)
 
         opt = vis.get_render_option()
-        opt.background_color = np.asarray([0.1, 0.1, 0.1])  # Charcoal grey background
+        opt.background_color = np.asarray(self.cmap.background)  # Charcoal grey background
         vis.run()
         vis.destroy_window()

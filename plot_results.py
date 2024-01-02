@@ -3,6 +3,7 @@ import open3d as o3d
 from frustum_visualizer import PointCloudCameraVisualizer
 from geometry_utils import load_bal_problem_file
 import ring_utils
+import os
 
 def main(bal_file, ring_file=None):
     cameras, points = load_bal_problem_file(bal_file)
@@ -10,6 +11,11 @@ def main(bal_file, ring_file=None):
     # Create an Open3D point cloud object
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(points)
+  
+    root_dir = '/mnt/c/Users/Jack/Documents/pc_data'
+    input_cloud = os.path.join(root_dir,'source_point_clouds','bmw.ply')
+
+    pcd = input_cloud 
 
     center_point = None
 
