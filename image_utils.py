@@ -132,10 +132,11 @@ image_size is a tuple (dimensions)
 colors is a list where colors[point_idx] = [r,g,b]
 
 """
-def render_coordinates(coordinates, image_size, colors):
+def render_coordinates(coordinates, image_size, colors, downsample_factor=2):
   import numpy as np
+  import cv2
 
-  image = np.zeros((image_size[0], image_size[1], 3))
+  image = np.ones((image_size[0], image_size[1], 3))
   collisions = dict()
   for i, coord in enumerate(coordinates):
     x, y = coord[0]
@@ -159,7 +160,14 @@ def render_coordinates(coordinates, image_size, colors):
         if 0 <= x < image_size[1] and 0 <= y < image_size[0]:
           image[y, x] = colors[i]
 
-  return image
+  # Downsample the image to make it look lower resolution
+  downsampled_image = cv2.resize(image, (image_size[1] // downsample_factor, image_size[0] // downsample_factor),
+                                   interpolation=cv2.INTER_LINEAR)
+
+  # Upsample it back to original resolution to enlarge the points
+  upsampled_image = cv2.resize(downsampled_image, (image_size[1], image_size[0]), interpolation=cv2.INTER_NEAREST)
+
+  return upsampled_image
 
 
 if __name__ == "__main__":
