@@ -1,11 +1,11 @@
-# Implementing geometric constraints (ring, plane) in Bundle Adjustment
+# Geometric Priors in Ceres
 
 <p align="center">
   <img src="diagrams/optimization_with_prior.png" alt="Car Image" style="width: 50%; height: 50%;"/>
 </p>
 
 ## Overview
-This repository contains a bundle adjuster capable of optimizing camera poses using quaternion (quat), angle axis, or ring parameter representations.
+This repository contains a bundle adjuster capable of optimizing camera poses using quaternion (quat), angle axis, or ring parameter representations. [A writeup for this project is here](https://jp-mess.github.io/relative-geometry-article/). I've put some basic directions on how to navigate this repo here, but I assume it's too all-over-the-place for anyone to actually use it. The repo is divided into some python scripts for setting up 3D simulations (see main.py), and a C++ bundle adjuster routine that is a heavily modified version of the [ceres examples](https://github.com/ceres-solver/ceres-solver/tree/master/examples)
 
 ## Getting Started
 
