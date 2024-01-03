@@ -1,7 +1,7 @@
 # Implementing geometric constraints (ring, plane) in Bundle Adjustment
 
 <p align="center">
-  <img src="diagrams/car.png" alt="Car Image" style="width: 50%; height: 50%;"/>
+  <img src="diagrams/optimization_with_prior.png" alt="Car Image" style="width: 50%; height: 50%;"/>
 </p>
 
 ## Overview
