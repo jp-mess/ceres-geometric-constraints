@@ -56,6 +56,4 @@ elevation_degree: 62.512197716891464
   ./bundle_adjuster --mode angle --input <BAL_file>
   ```
 
-## License
-This project is licensed under the MIT License - see the LICENSE.md file for details.
 
